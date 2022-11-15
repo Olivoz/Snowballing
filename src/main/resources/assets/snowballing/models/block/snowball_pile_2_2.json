@@ -1,0 +1,51 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "blocks/snow",
+		"particle": "blocks/snow"
+	},
+	"elements": [
+		{
+			"name": "snowLayer",
+			"from": [0, 0, 0],
+			"to": [16, 2, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 7]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 2], "texture": "#0"},
+				"east": {"uv": [0, 0, 16, 2], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 2], "texture": "#0"},
+				"west": {"uv": [0, 0, 16, 2], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "snowBall_01",
+			"from": [6, 2, 7],
+			"to": [10, 6, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 4, 6]},
+			"faces": {
+				"north": {"uv": [6, 4, 10, 8], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [0, 6, 4, 10], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [6, 8, 10, 12], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [12, 6, 16, 10], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [6, 0, 10, 4], "texture": "#0"},
+				"down": {"uv": [6, 12, 10, 16], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "snowBall_02",
+			"from": [3, 2, 2],
+			"to": [7, 6, 6],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [4, 4, 4]},
+			"faces": {
+				"north": {"uv": [6, 8, 10, 12], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [12, 6, 16, 10], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [6, 4, 10, 8], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 6, 4, 10], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [6, 0, 10, 4], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [6, 12, 10, 16], "texture": "#0"}
+			}
+		}
+	]
+}
