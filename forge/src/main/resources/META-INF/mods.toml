@@ -1,0 +1,28 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+issueTrackerURL = "https://github.com/Olivoz/Snowballing/issues"
+license = "MIT"
+
+[[mods]]
+modId = "snowballing"
+version = "${version}"
+displayName = "Snowballing"
+authors = "Lucas Sivars, Seth Chernick"
+description = '''
+This is an example description! Tell everyone what your mod is about!
+'''
+logoFile = "icon.png"
+
+[[dependencies.snowballing]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.snowballing]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.2,)"
+ordering = "NONE"
+side = "BOTH"

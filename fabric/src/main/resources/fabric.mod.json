@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "snowballing",
+  "version": "${version}",
+  "name": "Snowballing",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Lucas Sivars",
+    "Seth Chernick"
+  ],
+  "contact": {
+    "issues": "https://github.com/Olivoz/Snowballing/issues",
+    "sources": "https://github.com/Olivoz/Snowballing"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.olivoz.snowballing.fabric.SnowballingModFabric"
+    ]
+  },
+  "mixins": [
+    "snowballing.mixins.json",
+    "snowballing-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.19.2"
+  }
+}

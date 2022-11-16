@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "${group}",
+    "id": "snowballing",
+    "version": "${version}",
+    "metadata": {
+      "name": "Snowballing",
+      "description": "This is an example description! Tell everyone what your mod is about!",
+      "contributors": {
+        "Lucas Sivars": "Developer",
+        "Seth Chernick": "Artist"
+      },
+      "contact": {
+        "issues": "https://github.com/Olivoz/Snowballing/issues",
+        "sources": "https://github.com/Olivoz/Snowballing"
+      },
+      "icon": "icon.png",
+      "license": "MIT"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "environment": "*",
+    "entrypoints": {
+      "init": [
+        "io.github.olivoz.snowballing.quilt.SnowballingModQuilt"
+      ]
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "version": "*"
+      },
+      {
+        "id": "quilt_base",
+        "version": "*"
+      },
+      {
+        "id": "minecraft",
+        "version": ">=1.19.2"
+      }
+    ]
+  },
+  "mixin": [
+    "snowballing.mixins.json",
+    "snowballing-common.mixins.json"
+  ]
+}
