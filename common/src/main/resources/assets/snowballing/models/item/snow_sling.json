@@ -1,0 +1,30 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "item/snow_sling_empty",
+        "model": "item/snow_sling_empty"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "full": 0,
+                "charged": 0
+            },
+            "model": "item/snow_sling_empty"
+        },
+        {
+            "predicate": {
+                "full": 1
+				"charged": 0
+            },
+            "model": "item/snow_sling_full"
+        },
+		{
+            "predicate": {
+                "full": 1
+				"charged": 1
+            },
+            "model": "item/snow_sling_charged"
+        }
+    ]
+}
