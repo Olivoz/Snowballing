@@ -1,6 +1,6 @@
 {
 	"variants": {
-		"snowballs = 1": [ 
+		"snowballs=1": [ 
 			{"model": "snowballing:block/snowball_pile_1_1"},
 			{"model": "snowballing:block/snowball_pile_1_2"},
 			{"model": "snowballing:block/snowball_pile_1_3"},
@@ -13,7 +13,7 @@
 			{"model": "snowballing:block/snowball_pile_1_1", "y": 270},
 			{"model": "snowballing:block/snowball_pile_1_2", "y": 270},
 			{"model": "snowballing:block/snowball_pile_1_3", "y": 270} ],
-		"snowballs = 2": [ 
+		"snowballs=2": [ 
 			{"model": "snowballing:block/snowball_pile_2_1"},
 			{"model": "snowballing:block/snowball_pile_2_2"},
 			{"model": "snowballing:block/snowball_pile_2_3"},
@@ -26,7 +26,7 @@
 			{"model": "snowballing:block/snowball_pile_2_1", "y": 270},
 			{"model": "snowballing:block/snowball_pile_2_2", "y": 270},
 			{"model": "snowballing:block/snowball_pile_2_3", "y": 270} ],
-		"snowballs = 3": [ 
+		"snowballs=3": [ 
 			{"model": "snowballing:block/snowball_pile_3_1"},
 			{"model": "snowballing:block/snowball_pile_3_2"},
 			{"model": "snowballing:block/snowball_pile_3_3"},
@@ -39,7 +39,7 @@
 			{"model": "snowballing:block/snowball_pile_3_1", "y": 270},
 			{"model": "snowballing:block/snowball_pile_3_2", "y": 270},
 			{"model": "snowballing:block/snowball_pile_3_3", "y": 270} ],
-		"snowballs = 4": [ 
+		"snowballs=4": [ 
 			{"model": "snowballing:block/snowball_pile_4_1"},
 			{"model": "snowballing:block/snowball_pile_4_2"},
 			{"model": "snowballing:block/snowball_pile_4_3"},
@@ -52,7 +52,7 @@
 			{"model": "snowballing:block/snowball_pile_4_1", "y": 270},
 			{"model": "snowballing:block/snowball_pile_4_2", "y": 270},
 			{"model": "snowballing:block/snowball_pile_4_3", "y": 270} ],
-		"snowballs = 5": [ 
+		"snowballs=5": [ 
 			{"model": "snowballing:block/snowball_pile_5_1"},
 			{"model": "snowballing:block/snowball_pile_5_2"},
 			{"model": "snowballing:block/snowball_pile_5_3"},
@@ -65,7 +65,7 @@
 			{"model": "snowballing:block/snowball_pile_5_1", "y": 270},
 			{"model": "snowballing:block/snowball_pile_5_2", "y": 270},
 			{"model": "snowballing:block/snowball_pile_5_3", "y": 270} ],
-		"snowballs = 6": [ 
+		"snowballs=6": [ 
 			{"model": "snowballing:block/snowball_pile_6_1"},
 			{"model": "snowballing:block/snowball_pile_6_2"},
 			{"model": "snowballing:block/snowball_pile_6_3"},
