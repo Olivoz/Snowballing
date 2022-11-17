@@ -64,6 +64,19 @@
 			{"model": "snowballing:block/snowball_pile_5_3", "y": 180},
 			{"model": "snowballing:block/snowball_pile_5_1", "y": 270},
 			{"model": "snowballing:block/snowball_pile_5_2", "y": 270},
-			{"model": "snowballing:block/snowball_pile_5_3", "y": 270} ]
+			{"model": "snowballing:block/snowball_pile_5_3", "y": 270} ],
+		"snowballs = 6": [ 
+			{"model": "snowballing:block/snowball_pile_6_1"},
+			{"model": "snowballing:block/snowball_pile_6_2"},
+			{"model": "snowballing:block/snowball_pile_6_3"},
+			{"model": "snowballing:block/snowball_pile_6_1", "y": 90},
+			{"model": "snowballing:block/snowball_pile_6_2", "y": 90},
+			{"model": "snowballing:block/snowball_pile_6_3", "y": 90},
+			{"model": "snowballing:block/snowball_pile_6_1", "y": 180},
+			{"model": "snowballing:block/snowball_pile_6_2", "y": 180},
+			{"model": "snowballing:block/snowball_pile_6_3", "y": 180},
+			{"model": "snowballing:block/snowball_pile_6_1", "y": 270},
+			{"model": "snowballing:block/snowball_pile_6_2", "y": 270},
+			{"model": "snowballing:block/snowball_pile_6_3", "y": 270} ]
 	}
 }
