@@ -9,9 +9,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -95,7 +98,9 @@ public class SnowPileBlock extends Block {
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
         if(serverLevel.getBrightness(LightLayer.BLOCK, blockPos) > 11) return;
-        if(serverLevel.getBiome(blockPos).value().coldEnoughToSnow(blockPos)) return;
+        if(serverLevel.getBiome(blockPos)
+            .value()
+            .coldEnoughToSnow(blockPos)) return;
         SnowPileBlock.removeSnowball(serverLevel, blockPos, blockState);
     }
 
@@ -132,12 +137,18 @@ public class SnowPileBlock extends Block {
     @Override
     public InteractionResult use(final BlockState blockState, final Level level, final BlockPos blockPos, final Player player, final InteractionHand interactionHand, final BlockHitResult blockHitResult) {
         ItemStack itemInHand = player.getItemInHand(interactionHand);
-        if(itemInHand.getItem() != Items.SNOWBALL) return InteractionResult.PASS;
+        Item itemInHandType = itemInHand.getItem();
+        if(itemInHandType != Items.SNOWBALL && !(itemInHandType instanceof ShovelItem)) return InteractionResult.PASS;
 
         if(!level.isClientSide) {
             int size = blockState.getValue(SNOWBALLS);
             if(size < MAX_SIZE) {
-                if(!player.getAbilities().instabuild) itemInHand.shrink(1);
+                if(itemInHand.getMaxDamage() > 0) {
+                    itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                } else {
+                    itemInHand.shrink(1);
+                }
+
                 SnowPileBlock.addSnowball(level, blockPos, blockState);
             }
         }
