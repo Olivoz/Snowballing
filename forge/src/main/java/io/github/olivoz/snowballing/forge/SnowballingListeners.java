@@ -1,5 +1,6 @@
 package io.github.olivoz.snowballing.forge;
 
+import io.github.olivoz.snowballing.block.SnowPileBlock;
 import io.github.olivoz.snowballing.listeners.SnowballingInteractionListener;
 import lombok.experimental.UtilityClass;
 import net.minecraft.world.InteractionResult;
@@ -15,8 +16,11 @@ public final class SnowballingListeners {
     public static void onInteract(PlayerInteractEvent.RightClickBlock event) {
         if(event.getUseItem() == Event.Result.DENY) return;
         Level level = event.getLevel();
-        boolean handled = SnowballingInteractionListener.listen(event.getEntity(), level, event.getPos(), event.getItemStack(), SnowballingBlocks.SNOWBALL_PILE.get()::defaultBlockState);
-        if(handled) event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
+        boolean handled = SnowballingInteractionListener.listen(event.getEntity(), level, event.getPos(), event.getItemStack(), (SnowPileBlock) SnowballingBlocks.SNOWBALL_PILE.get());
+        if(handled) {
+            event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
+            event.setCanceled(true);
+        }
     }
 
 }

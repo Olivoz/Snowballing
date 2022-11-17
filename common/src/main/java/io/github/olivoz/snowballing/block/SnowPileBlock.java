@@ -138,7 +138,8 @@ public class SnowPileBlock extends Block {
     public InteractionResult use(final BlockState blockState, final Level level, final BlockPos blockPos, final Player player, final InteractionHand interactionHand, final BlockHitResult blockHitResult) {
         ItemStack itemInHand = player.getItemInHand(interactionHand);
         Item itemInHandType = itemInHand.getItem();
-        if(itemInHandType != Items.SNOWBALL && !(itemInHandType instanceof ShovelItem)) return InteractionResult.PASS;
+        if(!(itemInHandType == Items.SNOWBALL && player.isCrouching()) && !(itemInHandType instanceof ShovelItem))
+            return InteractionResult.PASS;
 
         if(!level.isClientSide) {
             int size = blockState.getValue(SNOWBALLS);
