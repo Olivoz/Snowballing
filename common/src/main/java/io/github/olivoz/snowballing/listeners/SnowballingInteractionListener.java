@@ -28,12 +28,17 @@ public final class SnowballingInteractionListener {
 
         if(itemInHandType == Items.SNOWBALL) {
             if(!player.isCrouching()) return false;
-            if(!player.getAbilities().instabuild) itemInHand.shrink(1);
 
             if(blockState.is(snowballPileBlock)) {
+                int size = blockState.getValue(SnowPileBlock.SNOWBALLS);
+                if(size == SnowPileBlock.MAX_SIZE) return false;
+
                 SnowPileBlock.addSnowball(level, blockPos, blockState);
+                if(!player.getAbilities().instabuild) itemInHand.shrink(1);
                 return true;
             }
+
+            if(!player.getAbilities().instabuild) itemInHand.shrink(1);
         } else if(blockState.is(Blocks.SNOW)) {
             itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         }
