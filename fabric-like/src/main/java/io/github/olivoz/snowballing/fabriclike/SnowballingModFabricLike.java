@@ -16,5 +16,6 @@ public final class SnowballingModFabricLike {
         SnowballingMod.init();
         SnowballingBlocks.init();
         SnowballingItems.init();
+        SnowballingListeners.init();
     }
 }

@@ -4,6 +4,7 @@ import io.github.olivoz.snowballing.SnowballingMod;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -25,5 +26,6 @@ public class SnowballingModForge {
         SnowballingMod.init();
         SnowballingBlocks.init(modEventBus);
         SnowballingItems.init(modEventBus);
+        MinecraftForge.EVENT_BUS.register(SnowballingListeners.class);
     }
 }

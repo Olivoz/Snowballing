@@ -143,10 +143,12 @@ public class SnowPileBlock extends Block {
         if(!level.isClientSide) {
             int size = blockState.getValue(SNOWBALLS);
             if(size < MAX_SIZE) {
-                if(itemInHand.getMaxDamage() > 0) {
-                    itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-                } else {
-                    itemInHand.shrink(1);
+                if(!player.getAbilities().instabuild) {
+                    if(itemInHand.getMaxDamage() > 0) {
+                        itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    } else {
+                        itemInHand.shrink(1);
+                    }
                 }
 
                 SnowPileBlock.addSnowball(level, blockPos, blockState);
