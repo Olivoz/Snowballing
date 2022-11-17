@@ -82,7 +82,7 @@ public class SnowPileBlock extends Block {
     public boolean canSurvive(BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
         BlockPos below = blockPos.below();
         BlockState belowState = levelReader.getBlockState(below);
-        return !belowState.is(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON) && belowState.is(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON) && Block.isFaceFull(belowState.getCollisionShape(levelReader, below), Direction.UP);
+        return !belowState.is(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON) && (belowState.is(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON) || Block.isFaceFull(belowState.getCollisionShape(levelReader, below), Direction.UP));
     }
 
     @Override
