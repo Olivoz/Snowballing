@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -98,9 +99,13 @@ public class SnowPileBlock extends Block {
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
         if(serverLevel.getBrightness(LightLayer.BLOCK, blockPos) > 11) return;
-        if(serverLevel.getBiome(blockPos)
-            .value()
-            .coldEnoughToSnow(blockPos)) return;
+
+        Biome biome = serverLevel.getBiome(blockPos)
+            .value();
+
+        if(!(biome.getHeightAdjustedTemperature(blockPos) > 1.0F && biome.getDownfall() == 0.0F) && !serverLevel.isRainingAt(blockPos))
+            return;
+
         SnowPileBlock.removeSnowball(serverLevel, blockPos, blockState);
     }
 
