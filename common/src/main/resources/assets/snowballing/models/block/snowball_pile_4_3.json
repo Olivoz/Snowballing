@@ -23,7 +23,7 @@
 			"name": "snowBall_01",
 			"from": [7, 2, 11],
 			"to": [11, 6, 15],
-			"rotation": {"angle": 0, "axis": "z", "origin": [9, 4, 13]},
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 4, 13]},
 			"faces": {
 				"north": {"uv": [6, 4, 10, 8], "rotation": 270, "texture": "#0"},
 				"east": {"uv": [12, 6, 16, 10], "rotation": 90, "texture": "#0"},
@@ -73,20 +73,6 @@
 				"west": {"uv": [12, 6, 16, 10], "rotation": 270, "texture": "#0"},
 				"up": {"uv": [6, 0, 10, 4], "texture": "#0"},
 				"down": {"uv": [6, 12, 10, 16], "rotation": 180, "texture": "#0"}
-			}
-		},
-		{
-			"name": "snowBall_05",
-			"from": [8, 2, 11],
-			"to": [12, 6, 15],
-			"rotation": {"angle": 22.5, "axis": "y", "origin": [4, 4, 4]},
-			"faces": {
-				"north": {"uv": [0, 6, 4, 10], "rotation": 90, "texture": "#0"},
-				"east": {"uv": [6, 8, 10, 12], "rotation": 90, "texture": "#0"},
-				"south": {"uv": [12, 6, 16, 10], "rotation": 270, "texture": "#0"},
-				"west": {"uv": [6, 4, 10, 8], "rotation": 90, "texture": "#0"},
-				"up": {"uv": [10, 0, 14, 4], "rotation": 270, "texture": "#0"},
-				"down": {"uv": [6, 12, 10, 16], "rotation": 270, "texture": "#0"}
 			}
 		}
 	]

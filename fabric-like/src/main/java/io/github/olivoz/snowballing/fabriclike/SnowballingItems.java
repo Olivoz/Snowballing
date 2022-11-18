@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 @UtilityClass
 public final class SnowballingItems {
 
-    public static final BlockItem SNOWBALL_PILE = new BlockItem(SnowballingBlocks.SNOWBALL_PILE, new FabricItemSettings().tab(SnowballingModFabricLike.SNOWBALLING_MOD_TAB));
+    public static final Item SNOWBALL_PILE = new BlockItem(SnowballingBlocks.SNOWBALL_PILE, new FabricItemSettings().tab(SnowballingModFabricLike.SNOWBALLING_MOD_TAB));
 
     private static void register(String id, Item item) {
         Registry.register(Registry.ITEM, new ResourceLocation(SnowballingMod.MOD_ID, id), item);
