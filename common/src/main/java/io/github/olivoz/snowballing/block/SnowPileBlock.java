@@ -1,5 +1,6 @@
 package io.github.olivoz.snowballing.block;
 
+import io.github.olivoz.snowballing.gamerule.SnowballingGameRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -47,7 +48,6 @@ public class SnowPileBlock extends Block {
     public SnowPileBlock() {
         super(BlockBehaviour.Properties.of(Material.TOP_SNOW)
             .randomTicks()
-            .noCollission()
             .sound(SoundType.SNOW));
 
         this.registerDefaultState(this.stateDefinition.any()
@@ -100,6 +100,9 @@ public class SnowPileBlock extends Block {
 
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
+        if(!serverLevel.getGameRules()
+            .getBoolean(SnowballingGameRules.SNOWBALL_PILES_MELT)) return;
+
         if(serverLevel.getBrightness(LightLayer.BLOCK, blockPos) > 11) return;
 
         Biome biome = serverLevel.getBiome(blockPos)
