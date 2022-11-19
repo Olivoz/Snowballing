@@ -48,6 +48,7 @@ public class SnowPileBlock extends Block {
         super(BlockBehaviour.Properties.of(Material.TOP_SNOW)
             .randomTicks()
             .noCollission()
+            .noOcclusion()
             .sound(SoundType.SNOW));
 
         this.registerDefaultState(this.stateDefinition.any()
