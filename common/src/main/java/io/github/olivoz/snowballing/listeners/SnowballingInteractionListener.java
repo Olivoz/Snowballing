@@ -24,8 +24,7 @@ public final class SnowballingInteractionListener {
         if(!blockState.is(Blocks.SNOW) && !blockState.is(snowballPileBlock)) return false;
 
         Item itemInHandType = itemInHand.getItem();
-        if(!(itemInHandType == Items.SNOWBALL && player.isCrouching()) && !(itemInHandType instanceof ShovelItem))
-            return false;
+        if(itemInHandType != Items.SNOWBALL && !(itemInHandType instanceof ShovelItem)) return false;
 
         if(itemInHandType == Items.SNOWBALL) {
             if(!player.isCrouching()) return false;
@@ -38,17 +37,26 @@ public final class SnowballingInteractionListener {
                 int amount = tag == null ? 1 : tag.getInt("size");
 
                 SnowPileBlock.addSnowball(level, blockPos, blockState, amount);
-                if(!player.getAbilities().instabuild) itemInHand.shrink(1);
-                return true;
+            } else {
+                level.setBlockAndUpdate(blockPos, snowballPileBlock.defaultBlockState());
+                level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
             }
 
             if(!player.getAbilities().instabuild) itemInHand.shrink(1);
-        } else if(blockState.is(Blocks.SNOW)) {
-            itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            return true;
         }
 
-        level.setBlockAndUpdate(blockPos, snowballPileBlock.defaultBlockState());
-        level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
+        if(blockState.is(Blocks.SNOW)) {
+            itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            level.setBlockAndUpdate(blockPos, snowballPileBlock.defaultBlockState());
+            level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
+            return true;
+        }
+
+        int size = blockState.getValue(SnowPileBlock.SNOWBALLS);
+        if(size == SnowPileBlock.MAX_SIZE) return false;
+        itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        SnowPileBlock.addSnowball(level, blockPos, blockState, 1);
 
         return true;
     }
