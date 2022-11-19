@@ -3,7 +3,6 @@
   "package": "io.github.olivoz.snowballing.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "MixinTitleScreen"
   ],
   "mixins": [
   ],
