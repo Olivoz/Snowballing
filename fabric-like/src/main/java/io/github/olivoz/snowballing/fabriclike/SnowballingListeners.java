@@ -13,12 +13,14 @@ import net.minecraft.world.phys.BlockHitResult;
 @UtilityClass
 public final class SnowballingListeners {
 
+    public static InteractionResult onInteract(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        boolean handled = SnowballingInteractionListener.listen(player, level, hitResult.getBlockPos(), player.getItemInHand(hand), (SnowPileBlock) SnowballingBlocks.SNOWBALL_PILE);
+        if(handled) return InteractionResult.sidedSuccess(level.isClientSide);
+        else return InteractionResult.PASS;
+    }
+
     public static void init() {
-        UseBlockCallback.EVENT.register((Player player, Level level, InteractionHand hand, BlockHitResult hitResult) -> {
-            boolean handled = SnowballingInteractionListener.listen(player, level, hitResult.getBlockPos(), player.getItemInHand(hand), (SnowPileBlock) SnowballingBlocks.SNOWBALL_PILE);
-            if(handled) return InteractionResult.sidedSuccess(level.isClientSide);
-            else return InteractionResult.PASS;
-        });
+        UseBlockCallback.EVENT.register(SnowballingListeners::onInteract);
     }
 
 }

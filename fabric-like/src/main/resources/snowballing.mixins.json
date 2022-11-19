@@ -1,10 +1,11 @@
 {
   "required": true,
-  "package": "io.github.olivoz.snowballing.quilt.mixin",
+  "package": "io.github.olivoz.snowballing.fabriclike.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
   ],
   "mixins": [
+    "MixinProjectile"
   ],
   "injectors": {
     "defaultRequire": 1
