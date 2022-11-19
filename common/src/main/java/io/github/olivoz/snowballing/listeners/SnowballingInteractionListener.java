@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -19,19 +20,19 @@ import net.minecraft.world.level.block.state.BlockState;
 @UtilityClass
 public final class SnowballingInteractionListener {
 
-    public static boolean listen(Player player, Level level, BlockPos blockPos, ItemStack itemInHand, SnowPileBlock snowballPileBlock) {
+    public static InteractionResult listen(Player player, Level level, BlockPos blockPos, ItemStack itemInHand, SnowPileBlock snowballPileBlock) {
         BlockState blockState = level.getBlockState(blockPos);
-        if(!blockState.is(Blocks.SNOW) && !blockState.is(snowballPileBlock)) return false;
+        if(!blockState.is(Blocks.SNOW) && !blockState.is(snowballPileBlock)) return InteractionResult.PASS;
 
         Item itemInHandType = itemInHand.getItem();
-        if(itemInHandType != Items.SNOWBALL && !(itemInHandType instanceof ShovelItem)) return false;
+        if(itemInHandType != Items.SNOWBALL && !(itemInHandType instanceof ShovelItem)) return InteractionResult.PASS;
 
         if(itemInHandType == Items.SNOWBALL) {
-            if(!player.isCrouching()) return false;
+            if(!player.isCrouching()) return InteractionResult.PASS;
 
             if(blockState.is(snowballPileBlock)) {
                 int size = blockState.getValue(SnowPileBlock.SNOWBALLS);
-                if(size == SnowPileBlock.MAX_SIZE) return false;
+                if(size == SnowPileBlock.MAX_SIZE) return InteractionResult.FAIL;
 
                 CompoundTag tag = itemInHand.getTag();
                 int amount = tag == null ? 1 : tag.getInt("size");
@@ -43,22 +44,22 @@ public final class SnowballingInteractionListener {
             }
 
             if(!player.getAbilities().instabuild) itemInHand.shrink(1);
-            return true;
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if(blockState.is(Blocks.SNOW)) {
             itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             level.setBlockAndUpdate(blockPos, snowballPileBlock.defaultBlockState());
             level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
-            return true;
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
         int size = blockState.getValue(SnowPileBlock.SNOWBALLS);
-        if(size == SnowPileBlock.MAX_SIZE) return false;
+        if(size == SnowPileBlock.MAX_SIZE) return InteractionResult.FAIL;
         itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         SnowPileBlock.addSnowball(level, blockPos, blockState, 1);
 
-        return true;
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
 }

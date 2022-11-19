@@ -14,9 +14,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public final class SnowballingListeners {
 
     public static InteractionResult onInteract(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
-        boolean handled = SnowballingInteractionListener.listen(player, level, hitResult.getBlockPos(), player.getItemInHand(hand), (SnowPileBlock) SnowballingBlocks.SNOWBALL_PILE);
-        if(handled) return InteractionResult.sidedSuccess(level.isClientSide);
-        else return InteractionResult.PASS;
+        return SnowballingInteractionListener.listen(player, level, hitResult.getBlockPos(), player.getItemInHand(hand), (SnowPileBlock) SnowballingBlocks.SNOWBALL_PILE);
     }
 
     public static void init() {

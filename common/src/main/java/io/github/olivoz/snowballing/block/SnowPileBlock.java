@@ -160,7 +160,7 @@ public class SnowPileBlock extends Block {
             return InteractionResult.PASS;
 
         int size = blockState.getValue(SNOWBALLS);
-        if(size >= MAX_SIZE) return InteractionResult.PASS;
+        if(size >= MAX_SIZE) return InteractionResult.FAIL;
 
         if(!level.isClientSide) {
             if(!player.getAbilities().instabuild) {
