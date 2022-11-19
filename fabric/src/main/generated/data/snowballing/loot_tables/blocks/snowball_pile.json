@@ -1,0 +1,279 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {}
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "1"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 2.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "minecraft:snowball"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "2"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 3.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "minecraft:snowball"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "3"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 4.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "minecraft:snowball"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "4"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 5.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "minecraft:snowball"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "5"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 6.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "minecraft:snowball"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "6"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 7.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "minecraft:snowball"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:match_tool",
+                    "predicate": {
+                      "enchantments": [
+                        {
+                          "enchantment": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:alternatives",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "1"
+                      }
+                    }
+                  ],
+                  "name": "snowballing:snowball_pile"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "2"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_nbt",
+                      "tag": "{size:2}"
+                    }
+                  ],
+                  "name": "snowballing:snowball_pile"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "3"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_nbt",
+                      "tag": "{size:3}"
+                    }
+                  ],
+                  "name": "snowballing:snowball_pile"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "4"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_nbt",
+                      "tag": "{size:4}"
+                    }
+                  ],
+                  "name": "snowballing:snowball_pile"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "5"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_nbt",
+                      "tag": "{size:5}"
+                    }
+                  ],
+                  "name": "snowballing:snowball_pile"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "snowballing:snowball_pile",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "snowballs": "6"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "function": "minecraft:set_nbt",
+                      "tag": "{size:6}"
+                    }
+                  ],
+                  "name": "snowballing:snowball_pile"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

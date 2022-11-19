@@ -3,6 +3,7 @@ package io.github.olivoz.snowballing.listeners;
 import io.github.olivoz.snowballing.block.SnowPileBlock;
 import lombok.experimental.UtilityClass;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -33,7 +34,10 @@ public final class SnowballingInteractionListener {
                 int size = blockState.getValue(SnowPileBlock.SNOWBALLS);
                 if(size == SnowPileBlock.MAX_SIZE) return false;
 
-                SnowPileBlock.addSnowball(level, blockPos, blockState);
+                CompoundTag tag = itemInHand.getTag();
+                int amount = tag == null ? 1 : tag.getInt("size");
+
+                SnowPileBlock.addSnowball(level, blockPos, blockState, amount);
                 if(!player.getAbilities().instabuild) itemInHand.shrink(1);
                 return true;
             }

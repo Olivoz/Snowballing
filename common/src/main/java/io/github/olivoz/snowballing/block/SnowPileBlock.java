@@ -3,10 +3,12 @@ package io.github.olivoz.snowballing.block;
 import io.github.olivoz.snowballing.gamerule.SnowballingGameRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,11 +34,14 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class SnowPileBlock extends Block {
@@ -49,29 +54,29 @@ public class SnowPileBlock extends Block {
         super(BlockBehaviour.Properties.of(Material.TOP_SNOW)
             .randomTicks()
             .noCollission()
+            .strength(0.1F)
+            .requiresCorrectToolForDrops()
             .sound(SoundType.SNOW));
 
         this.registerDefaultState(this.stateDefinition.any()
             .setValue(SNOWBALLS, 1));
     }
 
-    public static void removeSnowball(Level level, BlockPos blockPos, BlockState blockState) {
-        int newSize = blockState.getValue(SNOWBALLS) - 1;
+    public static void removeSnowball(Level level, BlockPos blockPos, BlockState blockState, int amount) {
+        addSnowball(level, blockPos, blockState, -amount);
+    }
 
-        if(newSize < 1) {
+    public static void addSnowball(Level level, BlockPos blockPos, BlockState blockState, int amount) {
+        int size = blockState.getValue(SNOWBALLS);
+        int newSize = Mth.clamp(size + amount, 0, MAX_SIZE);
+
+        if(newSize == 0) {
             level.setBlockAndUpdate(blockPos, Blocks.SNOW.defaultBlockState());
             return;
         }
 
         level.setBlockAndUpdate(blockPos, blockState.setValue(SNOWBALLS, newSize));
-    }
-
-    public static void addSnowball(Level level, BlockPos blockPos, BlockState blockState) {
-        int newSize = blockState.getValue(SNOWBALLS) + 1;
-        if(newSize > MAX_SIZE) return;
-
-        level.setBlockAndUpdate(blockPos, blockState.setValue(SNOWBALLS, newSize));
-        level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
+        if(newSize > size) level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 
     @Override
@@ -112,7 +117,7 @@ public class SnowPileBlock extends Block {
         if(!(biome.getHeightAdjustedTemperature(blockPos) > 1.0F && biome.getDownfall() == 0.0F) && !serverLevel.isRainingAt(blockPos))
             return;
 
-        SnowPileBlock.removeSnowball(serverLevel, blockPos, blockState);
+        SnowPileBlock.removeSnowball(serverLevel, blockPos, blockState, 1);
     }
 
     @Override
@@ -132,12 +137,17 @@ public class SnowPileBlock extends Block {
         BlockState blockState = blockPlaceContext.getLevel()
             .getBlockState(blockPlaceContext.getClickedPos());
 
+        ItemStack itemInHand = blockPlaceContext.getItemInHand();
+
+        CompoundTag tag = itemInHand.getTag();
+        int amount = tag == null ? 1 : tag.getInt("size");
+
         if(blockState.is(this)) {
-            int size = blockState.getValue(SNOWBALLS);
-            return blockState.setValue(SNOWBALLS, Math.min(size + 1, MAX_SIZE));
+            int currentSize = blockState.getValue(SNOWBALLS);
+            return blockState.setValue(SNOWBALLS, Mth.clamp(currentSize + amount + 1, 1, MAX_SIZE));
         }
 
-        return super.getStateForPlacement(blockPlaceContext);
+        return defaultBlockState().setValue(SNOWBALLS, Mth.clamp(amount, 1, MAX_SIZE));
     }
 
     @Override
@@ -163,10 +173,15 @@ public class SnowPileBlock extends Block {
                     }
                 }
 
-                SnowPileBlock.addSnowball(level, blockPos, blockState);
+                SnowPileBlock.addSnowball(level, blockPos, blockState, 1);
             }
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(final BlockState blockState, final LootContext.Builder builder) {
+        return super.getDrops(blockState, builder);
     }
 }

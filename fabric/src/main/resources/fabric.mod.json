@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "io.github.olivoz.snowballing.fabric.SnowballingModFabric"
+    ],
+    "fabric-datagen": [
+      "io.github.olivoz.snowballing.datagen.SnowballingDataGenerator"
     ]
   },
   "mixins": [
