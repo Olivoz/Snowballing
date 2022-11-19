@@ -34,14 +34,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class SnowPileBlock extends Block {
@@ -178,10 +175,5 @@ public class SnowPileBlock extends Block {
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    public List<ItemStack> getDrops(final BlockState blockState, final LootContext.Builder builder) {
-        return super.getDrops(blockState, builder);
     }
 }
