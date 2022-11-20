@@ -156,24 +156,53 @@ public class SnowPileBlock extends Block {
     public InteractionResult use(final BlockState blockState, final Level level, final BlockPos blockPos, final Player player, final InteractionHand interactionHand, final BlockHitResult blockHitResult) {
         ItemStack itemInHand = player.getItemInHand(interactionHand);
         Item itemInHandType = itemInHand.getItem();
-        if(!(itemInHandType == Items.SNOWBALL && player.isCrouching()) && !(itemInHandType instanceof ShovelItem))
-            return InteractionResult.PASS;
 
-        int size = blockState.getValue(SNOWBALLS);
-        if(size >= MAX_SIZE) return InteractionResult.FAIL;
-
-        if(!level.isClientSide) {
-            if(!player.getAbilities().instabuild) {
-                if(itemInHand.getMaxDamage() > 0) {
-                    itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-                } else {
-                    itemInHand.shrink(1);
-                }
+        if(itemInHand.isEmpty()) {
+            if(player.isCrouching()) return InteractionResult.FAIL;
+            if(!level.isClientSide) {
+                SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+                player.setItemInHand(interactionHand, Items.SNOWBALL.getDefaultInstance());
             }
 
-            SnowPileBlock.addSnowball(level, blockPos, blockState, 1);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        if(itemInHandType == Items.SNOWBALL) {
+            if(player.getAbilities().instabuild) {
+                if(!level.isClientSide) SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            } else if(itemInHand.getMaxStackSize() > itemInHand.getCount()) {
+                if(!level.isClientSide) {
+                    SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+                    itemInHand.grow(1);
+                }
+
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            } else {
+                return InteractionResult.FAIL;
+            }
+        }
+
+        if(itemInHandType instanceof ShovelItem) {
+            int size = blockState.getValue(SNOWBALLS);
+            if(size >= MAX_SIZE) return InteractionResult.FAIL;
+
+            if(!level.isClientSide) {
+                if(!player.getAbilities().instabuild) {
+                    if(itemInHand.getMaxDamage() > 0) {
+                        itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    } else {
+                        itemInHand.shrink(1);
+                    }
+                }
+
+                SnowPileBlock.addSnowball(level, blockPos, blockState, 1);
+            }
+
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        return InteractionResult.PASS;
     }
 }
