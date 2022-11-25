@@ -1,6 +1,6 @@
 package io.github.olivoz.snowballing.block;
 
-import io.github.olivoz.snowballing.gamerule.SnowballingGameRules;
+import io.github.olivoz.snowballing.registry.SnowballingGameRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -111,7 +111,7 @@ public class SnowPileBlock extends Block {
         Biome biome = serverLevel.getBiome(blockPos)
             .value();
 
-        if(!(biome.getHeightAdjustedTemperature(blockPos) > 1.0F && biome.getDownfall() == 0.0F) && !serverLevel.isRainingAt(blockPos))
+        if(!biome.shouldSnowGolemBurn(blockPos) && !serverLevel.isRainingAt(blockPos))
             return;
 
         SnowPileBlock.removeSnowball(serverLevel, blockPos, blockState, 1);

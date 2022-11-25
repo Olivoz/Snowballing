@@ -1,7 +1,8 @@
 package io.github.olivoz.snowballing.fabriclike;
 
 import io.github.olivoz.snowballing.block.SnowPileBlock;
-import io.github.olivoz.snowballing.listeners.SnowballingInteractionListener;
+import io.github.olivoz.snowballing.listener.SnowballingInteractionListener;
+import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import lombok.experimental.UtilityClass;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +15,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public final class SnowballingListeners {
 
     public static InteractionResult onInteract(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
-        return SnowballingInteractionListener.listen(player, level, hitResult.getBlockPos(), player.getItemInHand(hand), (SnowPileBlock) SnowballingBlocks.SNOWBALL_PILE);
+        return SnowballingInteractionListener.listen(player, level, hitResult.getBlockPos(), player.getItemInHand(hand), SnowballingBlocks.SNOWBALL_PILE.get());
     }
 
     public static void init() {

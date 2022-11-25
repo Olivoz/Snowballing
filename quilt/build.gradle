@@ -9,6 +9,8 @@ repositories {
 architectury {
     platformSetupLoomIde()
     loader("quilt")
+    injectInjectables = false
+    addCommonMarker = false
 }
 
 loom {
@@ -55,6 +57,7 @@ processResources {
 
 shadowJar {
     exclude "architectury.common.json"
+    exclude ".cache"
 
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"

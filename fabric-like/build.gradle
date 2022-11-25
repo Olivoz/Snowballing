@@ -1,5 +1,7 @@
 architectury {
     common(rootProject.enabled_platforms.split(","))
+    injectInjectables = false
+    addCommonMarker = false
 }
 
 loom {

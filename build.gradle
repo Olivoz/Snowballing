@@ -6,6 +6,8 @@ plugins {
 
 architectury {
     minecraft = rootProject.minecraft_version
+    injectInjectables = false
+    addCommonMarker = false
 }
 
 subprojects {

@@ -1,4 +1,4 @@
-package io.github.olivoz.snowballing.listeners;
+package io.github.olivoz.snowballing.listener;
 
 import io.github.olivoz.snowballing.block.SnowPileBlock;
 import lombok.experimental.UtilityClass;
@@ -14,15 +14,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 @UtilityClass
 public final class SnowballingInteractionListener {
 
-    public static InteractionResult listen(Player player, Level level, BlockPos blockPos, ItemStack itemInHand, SnowPileBlock snowballPileBlock) {
+    public static InteractionResult listen(Player player, Level level, BlockPos blockPos, ItemStack itemInHand, Block snowballPileBlock) {
         BlockState blockState = level.getBlockState(blockPos);
-        if(!blockState.is(Blocks.SNOW) && !blockState.is(snowballPileBlock)) return InteractionResult.PASS;
+        if(!(blockState.is(Blocks.SNOW) && blockState.getValue(SnowLayerBlock.LAYERS) == 1) && !blockState.is(snowballPileBlock)) return InteractionResult.PASS;
 
         Item itemInHandType = itemInHand.getItem();
         if(itemInHandType != Items.SNOWBALL && !(itemInHandType instanceof ShovelItem)) return InteractionResult.PASS;

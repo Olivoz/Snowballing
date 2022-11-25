@@ -1,7 +1,7 @@
 package io.github.olivoz.snowballing.datagen;
 
 import io.github.olivoz.snowballing.block.SnowPileBlock;
-import io.github.olivoz.snowballing.fabriclike.SnowballingBlocks;
+import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
@@ -45,18 +45,18 @@ public class SnowballingBlockLootProvider extends SimpleFabricLootTableProvider 
             .withPool(LootPool.lootPool()
                 .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS))
                 .add(AlternativesEntry.alternatives(AlternativesEntry.alternatives(SnowPileBlock.SNOWBALLS.getPossibleValues(), size -> LootItem.lootTableItem(Items.SNOWBALL)
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(SnowballingBlocks.SNOWBALL_PILE)
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(SnowballingBlocks.SNOWBALL_PILE.get())
                             .setProperties(StatePropertiesPredicate.Builder.properties()
                                 .hasProperty(SnowPileBlock.SNOWBALLS, size)))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(size + 1))))
                     .when(HAS_NO_SILK_TOUCH), AlternativesEntry.alternatives(SnowPileBlock.SNOWBALLS.getPossibleValues(), size -> size == 1 ? snowballPileDropForSize(size) : snowballPileDropForSize(size).apply(SetNbtFunction.setTag(snowballPileNBT(size)))))));
 
-        biConsumer.accept(SnowballingBlocks.SNOWBALL_PILE.getLootTable(), snowballPileLootTable);
+        biConsumer.accept(SnowballingBlocks.SNOWBALL_PILE.get().getLootTable(), snowballPileLootTable);
     }
 
     private LootPoolSingletonContainer.Builder<?> snowballPileDropForSize(int size) {
-        return LootItem.lootTableItem(SnowballingBlocks.SNOWBALL_PILE)
-            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(SnowballingBlocks.SNOWBALL_PILE)
+        return LootItem.lootTableItem(SnowballingBlocks.SNOWBALL_PILE.get())
+            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(SnowballingBlocks.SNOWBALL_PILE.get())
                 .setProperties(StatePropertiesPredicate.Builder.properties()
                     .hasProperty(SnowPileBlock.SNOWBALLS, size)));
     }

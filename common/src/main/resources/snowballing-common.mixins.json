@@ -5,6 +5,8 @@
   "client": [
   ],
   "mixins": [
+    "MixinLivingEntity",
+    "MixinVillager"
   ],
   "injectors": {
     "defaultRequire": 1

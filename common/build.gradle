@@ -1,5 +1,7 @@
 architectury {
     common(rootProject.enabled_platforms.split(","))
+    injectInjectables = false
+    addCommonMarker = false
 }
 
 loom {
@@ -7,6 +9,8 @@ loom {
 }
 
 dependencies {
+    compileOnly(project(path: ":registry", configuration: "namedElements")) { transitive false }
+
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
