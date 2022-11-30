@@ -45,8 +45,8 @@ public final class RegistryManager {
         return () -> registeredMemoryModuleType;
     }
 
-    public static Supplier<PoiType> registerPOI(final String id, int ticketCount, int searchDistance, final Block... blocks) {
-        PoiType registeredPoiType = PointOfInterestHelper.register(new ResourceLocation(SnowballingMod.MOD_ID, id), ticketCount, searchDistance, blocks);
+    public static Supplier<PoiType> registerPOI(final String id, int ticketCount, int searchDistance, final Supplier<Block[]> blocks) {
+        PoiType registeredPoiType = PointOfInterestHelper.register(new ResourceLocation(SnowballingMod.MOD_ID, id), ticketCount, searchDistance, blocks.get());
         return () -> registeredPoiType;
     }
 
