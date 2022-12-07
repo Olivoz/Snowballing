@@ -9,8 +9,8 @@ import net.minecraft.world.entity.projectile.Projectile;
 public final class SnowballingHitListener {
 
     public static void listen(Projectile projectile, LivingEntity livingEntity) {
-        if(livingEntity.canFreeze() && !(livingEntity instanceof Villager))
-            livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 20);
+        if(livingEntity.canFreeze() && !(livingEntity instanceof Villager) && (livingEntity.getTicksFrozen()<200))
+            livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 60);
     }
 
 }

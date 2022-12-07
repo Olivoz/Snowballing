@@ -1,8 +1,8 @@
 {
-    "parent": "minecraft:item/generated",
+    "parent": "minecraft:item/handheld",
     "textures": {
-        "layer0": "item/snow_sling_empty",
-        "model": "item/snow_sling_empty"
+        "layer0": "snowballing:item/snow_sling_empty",
+        "model": "snowballing:item/snow_sling_empty"
     },
     "overrides": [
         {
@@ -10,21 +10,22 @@
                 "full": 0,
                 "charged": 0
             },
-            "model": "item/snow_sling_empty"
+            "model": "snowballing:item/snow_sling_empty"
         },
         {
             "predicate": {
-                "full": 1
+                "full": 1,
 				"charged": 0
             },
-            "model": "item/snow_sling_full"
+            "model": "snowballing:item/snow_sling_full"
         },
 		{
             "predicate": {
-                "full": 1
+                "full": 1,
 				"charged": 1
             },
-            "model": "item/snow_sling_charged"
+            "model": "snowballing:item/snow_sling_charged"
         }
     ]
+
 }

@@ -1,4 +1,6 @@
 {
   "block.snowballing.snowball_pile": "Snowball Pile",
-  "itemGroup.snowballing.items": "Snowballing Items"
+  "itemGroup.snowballing.items": "Snowballing Items",
+  "item.snowballing.snow_sling": "Snow Sling",
+  "effect.snowballing.snowballed": "Snowballed"
 }
