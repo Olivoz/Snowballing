@@ -5,12 +5,14 @@ import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import io.github.olivoz.snowballing.registry.SnowballingItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
@@ -26,21 +28,11 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
 
     public static final Predicate<ItemStack> SNOWBALL = itemStack -> itemStack.is(Items.SNOWBALL);
     public static final int PROJECTILE_RANGE = 8;
-    private static final String TAG_CHARGED = "Charged";
     private static final String TAG_FILLED = "Filled";
 
     public SnowSling() {
         super(new Properties().durability(384)
             .tab(SnowballingItems.SNOWBALLING_MOD_TAB));
-    }
-
-    private static void shoot(Level level, LivingEntity shooter, InteractionHand interactionHand, ItemStack itemStack) {
-        Snowball snowball = new Snowball(level, shooter);
-        snowball.setItem(Items.SNOWBALL.getDefaultInstance());
-        snowball.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, 1.5F, 1.0F);
-
-        itemStack.hurtAndBreak(1, shooter, livingEntity -> livingEntity.broadcastBreakEvent(interactionHand));
-        level.addFreshEntity(snowball);
     }
 
     public static boolean isFilled(ItemStack itemStack) {
@@ -51,16 +43,6 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
     public static void setFilled(ItemStack itemStack, boolean filled) {
         CompoundTag compoundTag = itemStack.getOrCreateTag();
         compoundTag.putBoolean(TAG_FILLED, filled);
-    }
-
-    public static boolean isCharged(ItemStack itemStack) {
-        CompoundTag compoundTag = itemStack.getTag();
-        return compoundTag != null && compoundTag.getBoolean(TAG_CHARGED);
-    }
-
-    public static void setCharged(ItemStack itemStack, boolean charged) {
-        CompoundTag compoundTag = itemStack.getOrCreateTag();
-        compoundTag.putBoolean(TAG_CHARGED, charged);
     }
 
     @Override
@@ -80,16 +62,12 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        if(isCharged(itemStack)) {
-            shoot(level, player, interactionHand, itemStack);
-            setFilled(itemStack, false);
-            setCharged(itemStack, false);
-            return InteractionResultHolder.consume(itemStack);
-        }
-
         if(isFilled(itemStack) || !player.getProjectile(itemStack)
             .isEmpty()) {
-            if(!isCharged(itemStack)) {
+
+            if(isFilled(itemStack) || player.getAbilities().instabuild || !player.getProjectile(player.getItemInHand(interactionHand))
+                .isEmpty()) {
+
                 player.startUsingItem(interactionHand);
             }
 
@@ -100,13 +78,8 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
     }
 
     @Override
-    public boolean useOnRelease(ItemStack itemStack) {
-        return itemStack.is(this);
-    }
-
-    @Override
     public int getUseDuration(final ItemStack itemStack) {
-        return 25;
+        return 72000;
     }
 
     @Override
@@ -127,14 +100,24 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
 
     @Override
     public void releaseUsing(final ItemStack itemStack, final Level level, final LivingEntity livingEntity, final int useTimeLeft) {
-        if(useTimeLeft < 0 && !isCharged(itemStack)) {
-            if(livingEntity instanceof Player player && !isFilled(itemStack)) {
-                ItemStack projectileItem = player.getProjectile(itemStack);
-                if(projectileItem.isEmpty()) return;
-                projectileItem.shrink(1);
-            }
-
-            setCharged(itemStack, true);
+        if(!(livingEntity instanceof Player player)) return;
+        if(!isFilled(itemStack) && !player.getAbilities().instabuild) {
+            ItemStack projectileItem = player.getProjectile(itemStack);
+            if(projectileItem.isEmpty()) return;
+            projectileItem.shrink(1);
+            if(projectileItem.isEmpty()) player.getInventory()
+                .removeItem(projectileItem);
         }
+
+        if(isFilled(itemStack)) setFilled(itemStack, false);
+        itemStack.hurtAndBreak(1, player, consumedPlayer -> consumedPlayer.broadcastBreakEvent(consumedPlayer.getUsedItemHand()));
+        if(!level.isClientSide) {
+            Snowball snowball = new Snowball(level, player);
+            snowball.setItem(Items.SNOWBALL.getDefaultInstance());
+            snowball.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, BowItem.getPowerForTime(getUseDuration(itemStack) - useTimeLeft) * 3, 1.0F);
+            level.addFreshEntity(snowball);
+        }
+
+        player.awardStat(Stats.ITEM_USED.get(this));
     }
 }
