@@ -3,6 +3,7 @@ package io.github.olivoz.snowballing.manager;
 import com.google.common.collect.ImmutableSet;
 import io.github.olivoz.snowballing.SnowballingMod;
 import lombok.experimental.UtilityClass;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.schedule.Activity;
@@ -28,6 +29,7 @@ public final class RegistryManager {
     private static final DeferredRegister<Activity> ACTIVITIES = DeferredRegister.create(ForgeRegistries.ACTIVITIES, SnowballingMod.MOD_ID);
     private static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, SnowballingMod.MOD_ID);
     private static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, SnowballingMod.MOD_ID);
+    private static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, SnowballingMod.MOD_ID);
 
     public static Supplier<Block> registerBlock(final String id, final Supplier<Block> blockSupplier) {
         return BLOCKS.register(id, blockSupplier);
@@ -71,12 +73,17 @@ public final class RegistryManager {
         return GameRules.register(id, category, type);
     }
 
+    public static Supplier<MobEffect> registerEffect(final String id, final Supplier<MobEffect> mobEffectSupplier) {
+        return MOB_EFFECTS.register(id, mobEffectSupplier);
+    }
+
     public static void init(IEventBus eventBus) {
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
         ACTIVITIES.register(eventBus);
         MEMORY_MODULE_TYPES.register(eventBus);
         POI_TYPES.register(eventBus);
+        MOB_EFFECTS.register(eventBus);
     }
 
 }

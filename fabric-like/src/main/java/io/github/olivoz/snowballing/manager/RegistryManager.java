@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.schedule.Activity;
@@ -52,6 +54,11 @@ public final class RegistryManager {
 
     public static <T extends GameRules.Value<T>> GameRules.Key<T> registerGameRule(final String id, GameRules.Category category, GameRules.Type<T> type) {
         return GameRuleRegistry.register(id, category, type);
+    }
+
+    public static Supplier<MobEffect> registerEffect(final String id, final Supplier<MobEffect> mobEffectSupplier) {
+        MobEffect registeredMobEffect = Registry.register(Registry.MOB_EFFECT, new ResourceLocation(SnowballingMod.MOD_ID, id), mobEffectSupplier.get());
+        return () -> registeredMobEffect;
     }
 
 }

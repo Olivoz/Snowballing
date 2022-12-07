@@ -1,6 +1,7 @@
 package io.github.olivoz.snowballing.manager;
 
 import lombok.experimental.UtilityClass;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.schedule.Activity;
@@ -42,4 +43,7 @@ public final class RegistryManager {
         throw new AssertionError();
     }
 
+    public static Supplier<MobEffect> registerEffect(final String id, final Supplier<MobEffect> mobEffectSupplier) {
+        throw new AssertionError();
+    }
 }

@@ -1,5 +1,6 @@
 package io.github.olivoz.snowballing;
 
+import io.github.olivoz.snowballing.registry.SnowballingEffects;
 import io.github.olivoz.snowballing.registry.SnowballingGameRules;
 import io.github.olivoz.snowballing.registry.SnowballingActivities;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
@@ -20,5 +21,6 @@ public final class SnowballingMod {
         SnowballingMemoryModules.init();
         SnowballingActivities.init();
         SnowballingPOI.init();
+        SnowballingEffects.init();
     }
 }
