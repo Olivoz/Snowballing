@@ -4,6 +4,7 @@ import io.github.olivoz.snowballing.registry.SnowballingGameRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -39,6 +41,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class SnowPileBlock extends Block {
@@ -204,5 +208,13 @@ public class SnowPileBlock extends Block {
         }
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void appendHoverText(final ItemStack itemStack, @Nullable final BlockGetter blockGetter, final List<Component> list, final TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, blockGetter, list, tooltipFlag);
+        CompoundTag tag = itemStack.getTag();
+        int amount = tag == null ? 1 : tag.getInt("size");
+        list.add(Component.translatable("item.snowballing.snowball_pile.size", amount));
     }
 }
