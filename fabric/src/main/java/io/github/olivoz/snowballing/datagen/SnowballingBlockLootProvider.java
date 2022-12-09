@@ -1,6 +1,6 @@
 package io.github.olivoz.snowballing.datagen;
 
-import io.github.olivoz.snowballing.block.SnowPileBlock;
+import io.github.olivoz.snowballing.block.SnowballPileBlock;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
@@ -44,12 +44,12 @@ public class SnowballingBlockLootProvider extends SimpleFabricLootTableProvider 
         LootTable.Builder snowballPileLootTable = LootTable.lootTable()
             .withPool(LootPool.lootPool()
                 .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS))
-                .add(AlternativesEntry.alternatives(AlternativesEntry.alternatives(SnowPileBlock.SNOWBALLS.getPossibleValues(), size -> LootItem.lootTableItem(Items.SNOWBALL)
+                .add(AlternativesEntry.alternatives(AlternativesEntry.alternatives(SnowballPileBlock.SNOWBALLS.getPossibleValues(), size -> LootItem.lootTableItem(Items.SNOWBALL)
                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(SnowballingBlocks.SNOWBALL_PILE.get())
                             .setProperties(StatePropertiesPredicate.Builder.properties()
-                                .hasProperty(SnowPileBlock.SNOWBALLS, size)))
+                                .hasProperty(SnowballPileBlock.SNOWBALLS, size)))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(size + 1))))
-                    .when(HAS_NO_SILK_TOUCH), AlternativesEntry.alternatives(SnowPileBlock.SNOWBALLS.getPossibleValues(), size -> size == 1 ? snowballPileDropForSize(size) : snowballPileDropForSize(size).apply(SetNbtFunction.setTag(snowballPileNBT(size)))))));
+                    .when(HAS_NO_SILK_TOUCH), AlternativesEntry.alternatives(SnowballPileBlock.SNOWBALLS.getPossibleValues(), size -> size == 1 ? snowballPileDropForSize(size) : snowballPileDropForSize(size).apply(SetNbtFunction.setTag(snowballPileNBT(size)))))));
 
         biConsumer.accept(SnowballingBlocks.SNOWBALL_PILE.get().getLootTable(), snowballPileLootTable);
     }
@@ -58,7 +58,7 @@ public class SnowballingBlockLootProvider extends SimpleFabricLootTableProvider 
         return LootItem.lootTableItem(SnowballingBlocks.SNOWBALL_PILE.get())
             .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(SnowballingBlocks.SNOWBALL_PILE.get())
                 .setProperties(StatePropertiesPredicate.Builder.properties()
-                    .hasProperty(SnowPileBlock.SNOWBALLS, size)));
+                    .hasProperty(SnowballPileBlock.SNOWBALLS, size)));
     }
 
     private CompoundTag snowballPileNBT(int size) {

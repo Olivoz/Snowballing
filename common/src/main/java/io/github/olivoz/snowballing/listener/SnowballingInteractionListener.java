@@ -1,6 +1,6 @@
 package io.github.olivoz.snowballing.listener;
 
-import io.github.olivoz.snowballing.block.SnowPileBlock;
+import io.github.olivoz.snowballing.block.SnowballPileBlock;
 import lombok.experimental.UtilityClass;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -32,25 +32,25 @@ public final class SnowballingInteractionListener {
         if(itemInHandType == Items.SNOWBALL) {
             if(blockState.is(snowballPileBlock)) {
                 if(player.isCrouching()) {
-                    int size = blockState.getValue(SnowPileBlock.SNOWBALLS);
-                    if(size == SnowPileBlock.MAX_SIZE) return InteractionResult.FAIL;
+                    int size = blockState.getValue(SnowballPileBlock.SNOWBALLS);
+                    if(size == SnowballPileBlock.MAX_SIZE) return InteractionResult.FAIL;
 
                     CompoundTag tag = itemInHand.getTag();
                     int amount = tag == null ? 1 : tag.getInt("size");
 
-                    SnowPileBlock.addSnowball(level, blockPos, blockState, amount);
+                    SnowballPileBlock.addSnowball(level, blockPos, blockState, amount);
                     if(!player.getAbilities().instabuild) itemInHand.shrink(1);
                     level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
 
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 } else {
                     if(player.getAbilities().instabuild) {
-                        if(!level.isClientSide) SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+                        if(!level.isClientSide) SnowballPileBlock.removeSnowball(level, blockPos, blockState, 1);
 
                         return InteractionResult.sidedSuccess(level.isClientSide);
                     } else if(itemInHand.getMaxStackSize() > itemInHand.getCount()) {
                         if(!level.isClientSide) {
-                            SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+                            SnowballPileBlock.removeSnowball(level, blockPos, blockState, 1);
                             itemInHand.grow(1);
                         }
 
@@ -79,11 +79,11 @@ public final class SnowballingInteractionListener {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        int size = blockState.getValue(SnowPileBlock.SNOWBALLS);
-        if(size == SnowPileBlock.MAX_SIZE) return InteractionResult.FAIL;
+        int size = blockState.getValue(SnowballPileBlock.SNOWBALLS);
+        if(size == SnowballPileBlock.MAX_SIZE) return InteractionResult.FAIL;
 
         itemInHand.hurtAndBreak(1, player, livingEntity -> livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-        SnowPileBlock.addSnowball(level, blockPos, blockState, 1);
+        SnowballPileBlock.addSnowball(level, blockPos, blockState, 1);
 
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

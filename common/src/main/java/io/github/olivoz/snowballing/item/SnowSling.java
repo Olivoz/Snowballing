@@ -1,6 +1,6 @@
 package io.github.olivoz.snowballing.item;
 
-import io.github.olivoz.snowballing.block.SnowPileBlock;
+import io.github.olivoz.snowballing.block.SnowballPileBlock;
 import io.github.olivoz.snowballing.extend.SlingShotSnowball;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import io.github.olivoz.snowballing.registry.SnowballingItems;
@@ -93,7 +93,7 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
         BlockState blockState = level.getBlockState(blockPos);
         if(!blockState.is(SnowballingBlocks.SNOWBALL_PILE.get())) return super.useOn(useOnContext);
 
-        SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+        SnowballPileBlock.removeSnowball(level, blockPos, blockState, 1);
         setFilled(itemInHand, true);
 
         return InteractionResult.sidedSuccess(level.isClientSide);

@@ -45,13 +45,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class SnowPileBlock extends Block {
+public class SnowballPileBlock extends Block {
 
     public static final int MAX_SIZE = 6;
     public static final IntegerProperty SNOWBALLS = IntegerProperty.create("snowballs", 1, MAX_SIZE);
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
-    public SnowPileBlock() {
+    public SnowballPileBlock() {
         super(BlockBehaviour.Properties.of(Material.TOP_SNOW)
             .randomTicks()
             .noCollission()
@@ -118,7 +118,7 @@ public class SnowPileBlock extends Block {
         if(!biome.shouldSnowGolemBurn(blockPos) && !serverLevel.isRainingAt(blockPos))
             return;
 
-        SnowPileBlock.removeSnowball(serverLevel, blockPos, blockState, 1);
+        SnowballPileBlock.removeSnowball(serverLevel, blockPos, blockState, 1);
     }
 
     @Override
@@ -164,7 +164,7 @@ public class SnowPileBlock extends Block {
         if(itemInHand.isEmpty()) {
             if(player.isCrouching()) return InteractionResult.FAIL;
             if(!level.isClientSide) {
-                SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+                SnowballPileBlock.removeSnowball(level, blockPos, blockState, 1);
                 player.setItemInHand(interactionHand, Items.SNOWBALL.getDefaultInstance());
             }
 
@@ -173,12 +173,12 @@ public class SnowPileBlock extends Block {
 
         if(itemInHandType == Items.SNOWBALL) {
             if(player.getAbilities().instabuild) {
-                if(!level.isClientSide) SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+                if(!level.isClientSide) SnowballPileBlock.removeSnowball(level, blockPos, blockState, 1);
 
                 return InteractionResult.sidedSuccess(level.isClientSide);
             } else if(itemInHand.getMaxStackSize() > itemInHand.getCount()) {
                 if(!level.isClientSide) {
-                    SnowPileBlock.removeSnowball(level, blockPos, blockState, 1);
+                    SnowballPileBlock.removeSnowball(level, blockPos, blockState, 1);
                     itemInHand.grow(1);
                 }
 
@@ -201,7 +201,7 @@ public class SnowPileBlock extends Block {
                     }
                 }
 
-                SnowPileBlock.addSnowball(level, blockPos, blockState, 1);
+                SnowballPileBlock.addSnowball(level, blockPos, blockState, 1);
             }
 
             return InteractionResult.sidedSuccess(level.isClientSide);

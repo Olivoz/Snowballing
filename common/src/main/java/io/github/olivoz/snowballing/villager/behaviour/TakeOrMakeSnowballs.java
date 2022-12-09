@@ -1,9 +1,8 @@
 package io.github.olivoz.snowballing.villager.behaviour;
 
-import io.github.olivoz.snowballing.block.SnowPileBlock;
+import io.github.olivoz.snowballing.block.SnowballPileBlock;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import io.github.olivoz.snowballing.registry.SnowballingMemoryModules;
-import io.github.olivoz.snowballing.registry.SnowballingPOI;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
@@ -62,7 +61,7 @@ public class TakeOrMakeSnowballs extends Behavior<Villager> {
 
         BlockState blockState = serverLevel.getBlockState(knownSnowPos.orElseThrow());
         if(!blockState.is(SnowballingBlocks.SNOWBALL_PILE.get())) return;
-        SnowPileBlock.removeSnowball(serverLevel, knownSnowPos.orElseThrow(), blockState, added);
+        SnowballPileBlock.removeSnowball(serverLevel, knownSnowPos.orElseThrow(), blockState, added);
     }
 
     @Override
