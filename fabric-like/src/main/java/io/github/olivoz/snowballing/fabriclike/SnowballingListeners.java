@@ -1,6 +1,5 @@
 package io.github.olivoz.snowballing.fabriclike;
 
-import io.github.olivoz.snowballing.block.SnowPileBlock;
 import io.github.olivoz.snowballing.listener.SnowballingInteractionListener;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import lombok.experimental.UtilityClass;

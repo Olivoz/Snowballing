@@ -2,7 +2,9 @@ package io.github.olivoz.snowballing.mixin;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
+import io.github.olivoz.snowballing.extend.EvilSnowballReferenceHack;
 import io.github.olivoz.snowballing.registry.SnowballingActivities;
+import io.github.olivoz.snowballing.registry.SnowballingItems;
 import io.github.olivoz.snowballing.registry.SnowballingMemoryModules;
 import io.github.olivoz.snowballing.villager.behaviour.EndSnowballFight;
 import io.github.olivoz.snowballing.villager.behaviour.SetSnowAsWalkTarget;
@@ -10,16 +12,17 @@ import io.github.olivoz.snowballing.villager.behaviour.SnowballAttack;
 import io.github.olivoz.snowballing.villager.behaviour.TakeOrMakeSnowballs;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.GateBehavior;
-import net.minecraft.world.entity.ai.behavior.RunOne;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,11 +34,9 @@ import java.util.Map;
 import java.util.Set;
 
 @Mixin(Villager.class)
-public abstract class MixinVillager {
+public final class MixinVillager implements EvilSnowballReferenceHack {
 
-    @Shadow public abstract Brain<Villager> getBrain();
-
-    @Shadow public abstract boolean isClientSide();
+    private @Nullable Snowball lastHitBySnowball = null;
 
     @Accessor("MEMORY_TYPES")
     private static ImmutableList<MemoryModuleType<?>> getMemoryTypes() {
@@ -67,8 +68,25 @@ public abstract class MixinVillager {
 
     @Inject(at = @At("HEAD"), method = "mobInteract", cancellable = true)
     public void snowballingMixinMobInteract(final Player player, final InteractionHand interactionHand, final CallbackInfoReturnable<InteractionResult> cir) {
-        if(player.isHolding(Items.SNOWBALL)) {
+        if(player.isHolding(Items.SNOWBALL) || player.isHolding(SnowballingItems.SNOW_SLING.get())) {
             cir.setReturnValue(InteractionResult.PASS);
         }
+    }
+
+    @Inject(at = @At(value = "HEAD"), method = "setLastHurtByMob(Lnet/minecraft/world/entity/LivingEntity;)V", cancellable = true)
+    private void snowballingMixinSetLastHurtByMob(final LivingEntity livingEntity, final CallbackInfo ci) {
+        if(lastHitBySnowball == null) return;
+        lastHitBySnowball = null;
+        ci.cancel();
+    }
+
+    @Override
+    public @Nullable Snowball getLastHitBySnowball() {
+        return lastHitBySnowball;
+    }
+
+    @Override
+    public void setLastHitBySnowball(@Nullable final Snowball snowball) {
+        this.lastHitBySnowball = snowball;
     }
 }

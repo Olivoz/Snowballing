@@ -5,7 +5,7 @@
   "client": [
   ],
   "mixins": [
-    "MixinLivingEntity",
+    "MixinSnowball",
     "MixinVillager"
   ],
   "injectors": {

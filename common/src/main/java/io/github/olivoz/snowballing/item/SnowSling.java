@@ -1,6 +1,7 @@
 package io.github.olivoz.snowballing.item;
 
 import io.github.olivoz.snowballing.block.SnowPileBlock;
+import io.github.olivoz.snowballing.extend.SlingShotSnowball;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
 import io.github.olivoz.snowballing.registry.SnowballingItems;
 import net.minecraft.core.BlockPos;
@@ -112,9 +113,15 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
         if(isFilled(itemStack)) setFilled(itemStack, false);
         itemStack.hurtAndBreak(1, player, consumedPlayer -> consumedPlayer.broadcastBreakEvent(consumedPlayer.getUsedItemHand()));
         if(!level.isClientSide) {
+            float power = BowItem.getPowerForTime(getUseDuration(itemStack) - useTimeLeft);
             Snowball snowball = new Snowball(level, player);
             snowball.setItem(Items.SNOWBALL.getDefaultInstance());
-            snowball.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, BowItem.getPowerForTime(getUseDuration(itemStack) - useTimeLeft) * 3, 1.0F);
+            snowball.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 3, 1.0F);
+
+            SlingShotSnowball slingShotSnowball = (SlingShotSnowball) snowball;
+            slingShotSnowball.setCharge(power);
+            slingShotSnowball.setSlingShot(true);
+
             level.addFreshEntity(snowball);
         }
 
