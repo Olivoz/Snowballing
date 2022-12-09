@@ -15,6 +15,10 @@ public class SnowballingTagProvider extends FabricTagProvider<Block> {
 
     @Override
     protected void generateTags() {
-        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(SnowballingBlocks.SNOWBALL_PILE.get());
+        Block snowballPile = SnowballingBlocks.SNOWBALL_PILE.get();
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(snowballPile);
+        getOrCreateTagBuilder(BlockTags.SNOW).add(snowballPile);
+        getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS).add(snowballPile);
+        getOrCreateTagBuilder(BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH).add(snowballPile);
     }
 }
