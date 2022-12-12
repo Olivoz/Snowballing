@@ -9,6 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.animal.IronGolem;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -74,7 +76,16 @@ public final class MixinSnowball implements SlingShotSnowball {
         }
 
         if((snowball instanceof SlingShotSnowball slingShotSnowball && slingShotSnowball.isSlingShot()) && slingShotSnowball.getCharge() > 0.1F) {
-            livingEntity.knockback(slingShotSnowball.getCharge(), snowball.getX() - livingEntity.getX(), snowball.getZ() - livingEntity.getZ());
+            double knockbackResistance = Math.max(0.0, 1.0 - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+
+            Vec3 vec3 = snowball.getDeltaMovement()
+                .multiply(1.0, 0.0, 1.0)
+                .normalize()
+                .scale(((SlingShotSnowball) snowball).getCharge() * knockbackResistance);
+
+            if(vec3.lengthSqr() > 0.0) {
+                livingEntity.push(vec3.x, 0.1, vec3.z);
+            }
         }
 
     }
