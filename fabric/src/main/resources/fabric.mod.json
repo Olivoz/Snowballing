@@ -24,8 +24,7 @@
     ]
   },
   "mixins": [
-    "snowballing.mixins.json",
-    "snowballing-common.mixins.json"
+    "snowballing.mixins.json"
   ],
   "depends": {
     "fabric": "*",
