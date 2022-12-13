@@ -14,7 +14,6 @@ loom {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
-        mixinConfig "snowballing-common.mixins.json"
         mixinConfig "snowballing.mixins.json"
     }
 }

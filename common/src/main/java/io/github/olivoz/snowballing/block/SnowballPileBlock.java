@@ -63,21 +63,24 @@ public class SnowballPileBlock extends Block {
             .setValue(SNOWBALLS, 1));
     }
 
-    public static void removeSnowball(Level level, BlockPos blockPos, BlockState blockState, int amount) {
-        addSnowball(level, blockPos, blockState, -amount);
+    public static int removeSnowball(Level level, BlockPos blockPos, BlockState blockState, int amount) {
+        return addSnowball(level, blockPos, blockState, -amount);
     }
 
-    public static void addSnowball(Level level, BlockPos blockPos, BlockState blockState, int amount) {
+    public static int addSnowball(Level level, BlockPos blockPos, BlockState blockState, int amount) {
         int size = blockState.getValue(SNOWBALLS);
         int newSize = Mth.clamp(size + amount, 0, MAX_SIZE);
+        int diff = Math.abs(size - newSize);
 
         if(newSize == 0) {
             level.setBlockAndUpdate(blockPos, Blocks.SNOW.defaultBlockState());
-            return;
+            return diff;
         }
 
         level.setBlockAndUpdate(blockPos, blockState.setValue(SNOWBALLS, newSize));
         if(newSize > size) level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
+
+        return diff;
     }
 
     @Override

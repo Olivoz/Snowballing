@@ -1,5 +1,7 @@
 package io.github.olivoz.snowballing.item;
 
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 import io.github.olivoz.snowballing.block.SnowballPileBlock;
 import io.github.olivoz.snowballing.extend.SlingShotSnowball;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
@@ -7,6 +9,7 @@ import io.github.olivoz.snowballing.registry.SnowballingItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,12 +23,20 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class SnowSling extends ProjectileWeaponItem implements Vanishable {
+
+    public static final Collection<Enchantment> ALLOWED_ENCHANTMENTS = List.of(Enchantments.MULTISHOT);
 
     public static final Predicate<ItemStack> SNOWBALL = itemStack -> itemStack.is(Items.SNOWBALL);
     public static final int PROJECTILE_RANGE = 8;
@@ -38,12 +49,12 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
 
     public static boolean isFilled(ItemStack itemStack) {
         CompoundTag compoundTag = itemStack.getTag();
-        return compoundTag != null && compoundTag.getBoolean(TAG_FILLED);
+        return compoundTag != null && compoundTag.getInt(TAG_FILLED) > 0;
     }
 
-    public static void setFilled(ItemStack itemStack, boolean filled) {
-        CompoundTag compoundTag = itemStack.getOrCreateTag();
-        compoundTag.putBoolean(TAG_FILLED, filled);
+    public static void addSnowballs(ItemStack snowSling, int amount) {
+        CompoundTag tag = snowSling.getOrCreateTag();
+        tag.putInt(TAG_FILLED, Math.max(0, tag.getInt(TAG_FILLED) + amount));
     }
 
     @Override
@@ -93,38 +104,76 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
         BlockState blockState = level.getBlockState(blockPos);
         if(!blockState.is(SnowballingBlocks.SNOWBALL_PILE.get())) return super.useOn(useOnContext);
 
-        SnowballPileBlock.removeSnowball(level, blockPos, blockState, 1);
-        setFilled(itemInHand, true);
+        int multishotLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemInHand);
+        int capacity = multishotLevel == 0 ? 1 : 3;
+
+        int removed = SnowballPileBlock.removeSnowball(level, blockPos, blockState, capacity);
+        addSnowballs(itemInHand, removed);
 
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     public void releaseUsing(final ItemStack itemStack, final Level level, final LivingEntity livingEntity, final int useTimeLeft) {
-        if(!(livingEntity instanceof Player player)) return;
-        if(!isFilled(itemStack) && !player.getAbilities().instabuild) {
-            ItemStack projectileItem = player.getProjectile(itemStack);
-            if(projectileItem.isEmpty()) return;
-            projectileItem.shrink(1);
-            if(projectileItem.isEmpty()) player.getInventory()
-                .removeItem(projectileItem);
+        int snowballs = 0;
+
+        CompoundTag compoundTag = itemStack.getTag();
+        if(compoundTag != null) {
+            snowballs = compoundTag.getInt(TAG_FILLED);
+            compoundTag.remove(TAG_FILLED);
         }
 
-        if(isFilled(itemStack)) setFilled(itemStack, false);
-        itemStack.hurtAndBreak(1, player, consumedPlayer -> consumedPlayer.broadcastBreakEvent(consumedPlayer.getUsedItemHand()));
+        if(livingEntity instanceof Player player) {
+            player.awardStat(Stats.ITEM_USED.get(this));
+
+            int multishotLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, itemStack);
+            int capacity = multishotLevel == 0 ? 1 : 3;
+
+            if(!player.getAbilities().instabuild) {
+                for(int i = Mth.clamp(snowballs, 0, capacity); i < capacity; i++) {
+                    ItemStack projectileItem = player.getProjectile(itemStack);
+                    if(projectileItem.isEmpty()) break;
+
+                    projectileItem.shrink(1);
+                    if(projectileItem.isEmpty()) player.getInventory()
+                        .removeItem(projectileItem);
+
+                    snowballs++;
+                }
+            } else {
+                snowballs = Math.max(capacity, snowballs);
+            }
+        }
+
+        itemStack.hurtAndBreak(1, livingEntity, consumedPlayer -> consumedPlayer.broadcastBreakEvent(consumedPlayer.getUsedItemHand()));
         if(!level.isClientSide) {
+
             float power = BowItem.getPowerForTime(getUseDuration(itemStack) - useTimeLeft);
-            Snowball snowball = new Snowball(level, player);
-            snowball.setItem(Items.SNOWBALL.getDefaultInstance());
-            snowball.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 3, 1.0F);
+            float offsetAngle = snowballs > 1 ? -5 * (snowballs - 1) : 0;
 
-            SlingShotSnowball slingShotSnowball = (SlingShotSnowball) snowball;
-            slingShotSnowball.setCharge(power);
-            slingShotSnowball.setSlingShot(true);
+            for(int i = 0; i < snowballs; i++) {
+                Snowball snowball = new Snowball(level, livingEntity);
+                snowball.setItem(Items.SNOWBALL.getDefaultInstance());
 
-            level.addFreshEntity(snowball);
+                Vec3 upVector = livingEntity.getUpVector(1.0F);
+                Quaternion quaternion = new Quaternion(new Vector3f(upVector), offsetAngle, true);
+                offsetAngle += 10;
+                Vec3 viewVector = livingEntity.getViewVector(1.0F);
+                Vector3f transformedViewVector = new Vector3f(viewVector);
+                transformedViewVector.transform(quaternion);
+                snowball.shoot(transformedViewVector.x(), transformedViewVector.y(), transformedViewVector.z(), power, 1F);
+
+                SlingShotSnowball slingShotSnowball = (SlingShotSnowball) snowball;
+                slingShotSnowball.setCharge(power);
+                slingShotSnowball.setSlingShot(true);
+
+                level.addFreshEntity(snowball);
+            }
         }
+    }
 
-        player.awardStat(Stats.ITEM_USED.get(this));
+    // This overrides the Forge method from IForgeItem
+    public boolean canApplyAtEnchantingTable(final ItemStack stack, final Enchantment enchantment) {
+        return ALLOWED_ENCHANTMENTS.contains(enchantment) || enchantment.category.canEnchant(stack.getItem());
     }
 }

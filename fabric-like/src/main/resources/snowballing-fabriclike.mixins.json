@@ -1,10 +1,12 @@
 {
   "required": true,
-  "package": "io.github.olivoz.snowballing.forge.mixin",
+  "package": "io.github.olivoz.snowballing.fabriclike.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
   ],
   "mixins": [
+    "MixinEnchantment",
+    "MixinEnchantmentHelper"
   ],
   "injectors": {
     "defaultRequire": 1
