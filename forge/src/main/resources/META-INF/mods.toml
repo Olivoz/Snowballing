@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "Snowballing"
 authors = "Lucas Sivars, Seth Chernick"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+Make snowball piles & have snowball fights. Just don't get frozen.
 '''
 logoFile = "icon.png"
 

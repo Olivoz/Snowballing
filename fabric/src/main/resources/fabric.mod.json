@@ -3,7 +3,7 @@
   "id": "snowballing",
   "version": "${version}",
   "name": "Snowballing",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Make snowball piles & have snowball fights. Just don't get frozen.",
   "authors": [
     "Lucas Sivars",
     "Seth Chernick"
