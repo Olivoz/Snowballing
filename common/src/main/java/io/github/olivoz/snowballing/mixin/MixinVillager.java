@@ -42,9 +42,6 @@ public abstract class MixinVillager implements EvilSnowballReferenceHack, PointT
 
     private @Nullable Snowball lastHitBySnowball = null;
 
-    @Shadow
-    public abstract Brain<Villager> getBrain();
-
     @Accessor("MEMORY_TYPES")
     private static ImmutableList<MemoryModuleType<?>> getMemoryTypes() {
         throw new AssertionError();
@@ -66,6 +63,9 @@ public abstract class MixinVillager implements EvilSnowballReferenceHack, PointT
 
         setMemoryTypes(newMemoryTypes);
     }
+
+    @Shadow
+    public abstract Brain<Villager> getBrain();
 
     @Inject(at = @At("HEAD"), method = "registerBrainGoals")
     public void snowballingMixinRegisterBrainGoals(final Brain<Villager> brain, final CallbackInfo ci) {

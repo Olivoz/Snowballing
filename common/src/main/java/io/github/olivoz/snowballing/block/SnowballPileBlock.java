@@ -118,8 +118,7 @@ public class SnowballPileBlock extends Block {
         Biome biome = serverLevel.getBiome(blockPos)
             .value();
 
-        if(!biome.shouldSnowGolemBurn(blockPos) && !serverLevel.isRainingAt(blockPos))
-            return;
+        if(!biome.shouldSnowGolemBurn(blockPos) && !serverLevel.isRainingAt(blockPos)) return;
 
         SnowballPileBlock.removeSnowball(serverLevel, blockPos, blockState, 1);
     }

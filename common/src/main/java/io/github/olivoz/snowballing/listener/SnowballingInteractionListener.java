@@ -24,7 +24,8 @@ public final class SnowballingInteractionListener {
 
     public static InteractionResult listen(Player player, Level level, BlockPos blockPos, ItemStack itemInHand, Block snowballPileBlock) {
         BlockState blockState = level.getBlockState(blockPos);
-        if(!(blockState.is(Blocks.SNOW) && blockState.getValue(SnowLayerBlock.LAYERS) == 1) && !blockState.is(snowballPileBlock)) return InteractionResult.PASS;
+        if(!(blockState.is(Blocks.SNOW) && blockState.getValue(SnowLayerBlock.LAYERS) == 1) && !blockState.is(snowballPileBlock))
+            return InteractionResult.PASS;
 
         Item itemInHandType = itemInHand.getItem();
         if(itemInHandType != Items.SNOWBALL && !(itemInHandType instanceof ShovelItem)) return InteractionResult.PASS;

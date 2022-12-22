@@ -77,6 +77,7 @@ public class TakeOrMakeSnowballs extends Behavior<Villager> {
         }
 
         if(villager.getInventory()
-            .countItem(Items.SNOWBALL) >= Items.SNOWBALL.getMaxStackSize()) brain.eraseMemory(SnowballingMemoryModules.SNOW_AT.get());
+            .countItem(Items.SNOWBALL) >= Items.SNOWBALL.getMaxStackSize())
+            brain.eraseMemory(SnowballingMemoryModules.SNOW_AT.get());
     }
 }
