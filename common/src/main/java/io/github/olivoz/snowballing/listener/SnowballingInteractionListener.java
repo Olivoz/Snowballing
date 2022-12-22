@@ -1,7 +1,6 @@
 package io.github.olivoz.snowballing.listener;
 
 import io.github.olivoz.snowballing.block.SnowballPileBlock;
-import lombok.experimental.UtilityClass;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
@@ -19,8 +18,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-@UtilityClass
 public final class SnowballingInteractionListener {
+
+    private SnowballingInteractionListener() {
+    }
 
     public static InteractionResult listen(Player player, Level level, BlockPos blockPos, ItemStack itemInHand, Block snowballPileBlock) {
         BlockState blockState = level.getBlockState(blockPos);

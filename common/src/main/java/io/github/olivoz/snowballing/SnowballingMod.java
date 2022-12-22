@@ -9,10 +9,11 @@ import io.github.olivoz.snowballing.registry.SnowballingLootContextParamSets;
 import io.github.olivoz.snowballing.registry.SnowballingMemoryModules;
 import io.github.olivoz.snowballing.registry.SnowballingNumberProviders;
 import io.github.olivoz.snowballing.registry.SnowballingPOI;
-import lombok.experimental.UtilityClass;
 
-@UtilityClass
 public final class SnowballingMod {
+
+    private SnowballingMod() {
+    }
 
     public static final String MOD_ID = "snowballing";
 

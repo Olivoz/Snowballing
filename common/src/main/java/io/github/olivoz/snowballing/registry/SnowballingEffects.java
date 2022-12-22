@@ -6,7 +6,10 @@ import net.minecraft.world.effect.MobEffect;
 
 import java.util.function.Supplier;
 
-public class SnowballingEffects {
+public final class SnowballingEffects {
+
+    private SnowballingEffects() {
+    }
 
     public static final Supplier<MobEffect> SNOWBALLED = RegistryManager.registerEffect("snowballed", SnowballedEffect::new);
 

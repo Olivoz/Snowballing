@@ -6,7 +6,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 
-public class SnowballingLootContextParams {
+public final class SnowballingLootContextParams {
+
+    private SnowballingLootContextParams() {
+    }
 
     public static final LootContextParam<LivingEntity> SNOWBALL_FIGHT_ENEMY = of("snowball_fight_enemy");
     public static final LootContextParam<Snowball> LAST_HIT_BY_SNOWBALL = of("last_hit_by_snowball");

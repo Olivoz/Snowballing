@@ -74,11 +74,10 @@ public class SnowballPileBlock extends Block {
 
         if(newSize == 0) {
             level.setBlockAndUpdate(blockPos, Blocks.SNOW.defaultBlockState());
-            return diff;
+        } else {
+            level.setBlockAndUpdate(blockPos, blockState.setValue(SNOWBALLS, newSize));
+            if(newSize > size) level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
         }
-
-        level.setBlockAndUpdate(blockPos, blockState.setValue(SNOWBALLS, newSize));
-        if(newSize > size) level.playSound(null, blockPos, SoundEvents.SNOW_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
 
         return diff;
     }

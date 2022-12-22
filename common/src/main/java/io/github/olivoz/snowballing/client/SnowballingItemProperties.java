@@ -8,6 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SnowballingItemProperties {
 
+    private SnowballingItemProperties() {
+    }
+
     public static void register() {
         ItemProperties.register(SnowballingItems.SNOW_SLING.get(), new ResourceLocation(SnowballingMod.MOD_ID, "full"), (itemStack, clientLevel, livingEntity, id) -> SnowSling.isFilled(itemStack) ? 1 : 0);
         ItemProperties.register(SnowballingItems.SNOW_SLING.get(), new ResourceLocation(SnowballingMod.MOD_ID, "pull"), (itemStack, clientLevel, livingEntity, id) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? itemStack.getUseDuration() - livingEntity.getUseItemRemainingTicks() / 20.0F : 0.0F);

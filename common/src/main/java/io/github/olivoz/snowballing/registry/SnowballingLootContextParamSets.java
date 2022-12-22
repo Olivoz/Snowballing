@@ -4,7 +4,10 @@ import io.github.olivoz.snowballing.manager.RegistryManager;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
-public class SnowballingLootContextParamSets {
+public final class SnowballingLootContextParamSets {
+
+    private SnowballingLootContextParamSets() {
+    }
 
     public static final LootContextParamSet SNOWBALL_FIGHT = RegistryManager.registerLootContextParamSet("snowball_fight", new LootContextParamSet.Builder().required(LootContextParams.THIS_ENTITY)
         .required(LootContextParams.ORIGIN)

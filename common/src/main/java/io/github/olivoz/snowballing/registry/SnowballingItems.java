@@ -2,15 +2,16 @@ package io.github.olivoz.snowballing.registry;
 
 import io.github.olivoz.snowballing.item.SnowSling;
 import io.github.olivoz.snowballing.manager.RegistryManager;
-import lombok.experimental.UtilityClass;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 
 import java.util.function.Supplier;
 
-@UtilityClass
 public final class SnowballingItems {
+
+    private SnowballingItems() {
+    }
 
     public static final CreativeModeTab SNOWBALLING_MOD_TAB = RegistryManager.registerTab("items");
 

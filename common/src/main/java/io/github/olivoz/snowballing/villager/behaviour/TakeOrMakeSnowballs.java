@@ -25,7 +25,6 @@ public class TakeOrMakeSnowballs extends Behavior<Villager> {
 
     private static final int TIME_PER_SNOWBALL = 20;
     private static final float REACH = 1.73F;
-    private static final int COOLDOWN = 20;
 
     public TakeOrMakeSnowballs() {
         super(Map.of(SnowballingMemoryModules.SNOW_AT.get(), MemoryStatus.VALUE_PRESENT), TIME_PER_SNOWBALL * Items.SNOWBALL.getMaxStackSize());

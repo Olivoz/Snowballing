@@ -6,7 +6,10 @@ import net.minecraft.world.level.storage.loot.providers.number.LootNumberProvide
 
 import java.util.function.Supplier;
 
-public class SnowballingNumberProviders {
+public final class SnowballingNumberProviders {
+
+    private SnowballingNumberProviders() {
+    }
 
     public static final Supplier<LootNumberProviderType> SNOWBALL_FIGHT_POINTS = RegistryManager.registerLootNumberProviderType("snowball_fight_points", () -> new LootNumberProviderType(new SnowballingPointsValue.Serializer()));
 

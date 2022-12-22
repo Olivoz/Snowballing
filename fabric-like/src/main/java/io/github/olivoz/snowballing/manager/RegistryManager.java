@@ -1,7 +1,6 @@
 package io.github.olivoz.snowballing.manager;
 
 import io.github.olivoz.snowballing.SnowballingMod;
-import lombok.experimental.UtilityClass;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
@@ -22,8 +21,10 @@ import net.minecraft.world.level.storage.loot.providers.number.LootNumberProvide
 
 import java.util.function.Supplier;
 
-@UtilityClass
 public final class RegistryManager {
+
+    private RegistryManager() {
+    }
 
     public static Supplier<Block> registerBlock(final String id, final Supplier<Block> blockSupplier) {
         Block registeredBlock = Registry.register(Registry.BLOCK, new ResourceLocation(SnowballingMod.MOD_ID, id), blockSupplier.get());

@@ -2,7 +2,6 @@ package io.github.olivoz.snowballing.manager;
 
 import com.google.common.collect.ImmutableSet;
 import io.github.olivoz.snowballing.SnowballingMod;
-import lombok.experimental.UtilityClass;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -26,8 +25,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-@UtilityClass
 public final class RegistryManager {
+
+    private RegistryManager() {
+    }
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SnowballingMod.MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SnowballingMod.MOD_ID);

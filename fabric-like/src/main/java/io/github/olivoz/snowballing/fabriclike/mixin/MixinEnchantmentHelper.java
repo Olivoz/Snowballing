@@ -15,6 +15,9 @@ import java.util.List;
 @Mixin(EnchantmentHelper.class)
 public final class MixinEnchantmentHelper {
 
+    private MixinEnchantmentHelper() {
+    }
+
     @Inject(method = "getAvailableEnchantmentResults", at = @At(value = "RETURN"))
     private static void snowballingMixinGetAvailableEnchantmentResults(final int enchantmentCost, final ItemStack itemStack, final boolean isTreasure, final CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
         if(!(itemStack.getItem() instanceof SnowSling)) return;

@@ -1,6 +1,5 @@
 package io.github.olivoz.snowballing.manager;
 
-import lombok.experimental.UtilityClass;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
@@ -14,8 +13,10 @@ import net.minecraft.world.level.storage.loot.providers.number.LootNumberProvide
 
 import java.util.function.Supplier;
 
-@UtilityClass
 public final class RegistryManager {
+
+    private RegistryManager() {
+    }
 
     public static Supplier<Block> registerBlock(final String id, final Supplier<Block> blockSupplier) {
         throw new AssertionError();
