@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.schedule.Activity;
@@ -17,6 +16,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 
 import java.util.function.Supplier;
 
@@ -59,6 +61,16 @@ public final class RegistryManager {
     public static Supplier<MobEffect> registerEffect(final String id, final Supplier<MobEffect> mobEffectSupplier) {
         MobEffect registeredMobEffect = Registry.register(Registry.MOB_EFFECT, new ResourceLocation(SnowballingMod.MOD_ID, id), mobEffectSupplier.get());
         return () -> registeredMobEffect;
+    }
+
+    public static Supplier<LootNumberProviderType> registerLootNumberProviderType(final String id, final Supplier<LootNumberProviderType> type) {
+        LootNumberProviderType registeredLootNumberProviderType = Registry.register(Registry.LOOT_NUMBER_PROVIDER_TYPE, new ResourceLocation(SnowballingMod.MOD_ID, id), type.get());
+        return () -> registeredLootNumberProviderType;
+    }
+
+    public static LootContextParamSet registerLootContextParamSet(final String id, LootContextParamSet set) {
+        LootContextParamSets.REGISTRY.put(new ResourceLocation(SnowballingMod.MOD_ID, id), set);
+        return set;
     }
 
 }

@@ -5,3 +5,4 @@ accessible method net/minecraft/world/entity/ai/behavior/VillagerGoalPackages ge
 accessible method net/minecraft/world/entity/ai/memory/MemoryModuleType register (Ljava/lang/String;)Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;
 mutable field net/minecraft/world/entity/npc/Villager MEMORY_TYPES Lcom/google/common/collect/ImmutableList;
 accessible field net/minecraft/world/entity/LivingEntity lastDamageSource Lnet/minecraft/world/damagesource/DamageSource;
+accessible field net/minecraft/world/level/storage/loot/parameters/LootContextParamSets REGISTRY Lcom/google/common/collect/BiMap;

@@ -1,0 +1,69 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:value_check",
+          "range": {
+            "min": -5.0
+          },
+          "value": {
+            "type": "snowballing:snowball_fight_points"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "snowballing:gameplay/snowball_fight/end/lowballer"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:value_check",
+          "range": {
+            "max": 18.0,
+            "min": 6.0
+          },
+          "value": {
+            "type": "snowballing:snowball_fight_points"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "snowballing:gameplay/snowball_fight/end/snovice"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:value_check",
+          "range": {
+            "min": 19.0
+          },
+          "value": {
+            "type": "snowballing:snowball_fight_points"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "snowballing:gameplay/snowball_fight/end/snowballer"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

@@ -1,23 +1,22 @@
 package io.github.olivoz.snowballing.mixin;
 
 import io.github.olivoz.snowballing.extend.EvilSnowballReferenceHack;
+import io.github.olivoz.snowballing.extend.PointTracker;
 import io.github.olivoz.snowballing.extend.SlingShotSnowball;
 import io.github.olivoz.snowballing.registry.SnowballingActivities;
 import io.github.olivoz.snowballing.registry.SnowballingEffects;
 import io.github.olivoz.snowballing.registry.SnowballingMemoryModules;
+import io.github.olivoz.snowballing.villager.behaviour.EndSnowballFight;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
-import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,19 +33,21 @@ public final class MixinSnowball implements SlingShotSnowball {
     private static void snowballingHandleSnowballHit(Snowball snowball, LivingEntity livingEntity) {
         if(!(snowball.getOwner() instanceof LivingEntity shooter)) return;
 
+        if(livingEntity instanceof PointTracker pointTracker) {
+            if(pointTracker.getEnemy() != shooter) pointTracker.setPoints(0);
+            else pointTracker.setPoints(pointTracker.getPoints() + 1);
+        }
+
+        if(shooter instanceof PointTracker pointTracker && livingEntity instanceof Player) {
+            pointTracker.setPoints(pointTracker.getPoints() - 1);
+        }
+
         if(livingEntity instanceof Villager villager) {
             ((EvilSnowballReferenceHack) villager).setLastHitBySnowball(snowball);
 
             Brain<Villager> brain = villager.getBrain();
 
-            Activity activityAt = villager.getBrain()
-                .getSchedule()
-                .getActivityAt((int) (villager.level.getDayTime() % 24000L));
-
-            VillagerProfession profession = villager.getVillagerData()
-                .getProfession();
-
-            if((profession.heldJobSite() == PoiType.NONE || activityAt == Activity.IDLE) && !brain.isActive(SnowballingActivities.SNOWBALL_FIGHT.get())) {
+            if(!brain.isActive(SnowballingActivities.SNOWBALL_FIGHT.get()) && !EndSnowballFight.shouldEnd(villager)) {
                 brain.eraseMemory(MemoryModuleType.PATH);
                 brain.eraseMemory(MemoryModuleType.WALK_TARGET);
                 brain.eraseMemory(MemoryModuleType.LOOK_TARGET);

@@ -149,7 +149,7 @@ public class SnowballAttack extends Behavior<Villager> {
     @Override
     protected boolean canStillUse(final ServerLevel serverLevel, final Villager villager, final long currentTick) {
         return !timedOut(currentTick) && villager.getInventory()
-            .countItem(Items.SNOWBALL) > 0;
+            .countItem(Items.SNOWBALL) > 0 && !EndSnowballFight.shouldEnd(villager);
     }
 
     private void throwSnowball(Villager villager, LivingEntity target) {

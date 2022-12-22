@@ -9,6 +9,8 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 
 import java.util.function.Supplier;
 
@@ -44,6 +46,14 @@ public final class RegistryManager {
     }
 
     public static Supplier<MobEffect> registerEffect(final String id, final Supplier<MobEffect> mobEffectSupplier) {
+        throw new AssertionError();
+    }
+
+    public static Supplier<LootNumberProviderType> registerLootNumberProviderType(final String id, final Supplier<LootNumberProviderType> type) {
+        throw new AssertionError();
+    }
+
+    public static LootContextParamSet registerLootContextParamSet(final String id, LootContextParamSet set) {
         throw new AssertionError();
     }
 }

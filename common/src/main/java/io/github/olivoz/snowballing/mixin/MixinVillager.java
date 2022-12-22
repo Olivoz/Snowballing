@@ -3,6 +3,7 @@ package io.github.olivoz.snowballing.mixin;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import io.github.olivoz.snowballing.extend.EvilSnowballReferenceHack;
+import io.github.olivoz.snowballing.extend.PointTracker;
 import io.github.olivoz.snowballing.registry.SnowballingActivities;
 import io.github.olivoz.snowballing.registry.SnowballingItems;
 import io.github.olivoz.snowballing.registry.SnowballingMemoryModules;
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,9 +36,14 @@ import java.util.Map;
 import java.util.Set;
 
 @Mixin(Villager.class)
-public final class MixinVillager implements EvilSnowballReferenceHack {
+public abstract class MixinVillager implements EvilSnowballReferenceHack, PointTracker {
+
+    private int snowballingPoints = 0;
 
     private @Nullable Snowball lastHitBySnowball = null;
+
+    @Shadow
+    public abstract Brain<Villager> getBrain();
 
     @Accessor("MEMORY_TYPES")
     private static ImmutableList<MemoryModuleType<?>> getMemoryTypes() {
@@ -88,5 +95,21 @@ public final class MixinVillager implements EvilSnowballReferenceHack {
     @Override
     public void setLastHitBySnowball(@Nullable final Snowball snowball) {
         this.lastHitBySnowball = snowball;
+    }
+
+    @Override
+    public @Nullable LivingEntity getEnemy() {
+        return getBrain().getMemory(SnowballingMemoryModules.SNOWBALL_FIGHT_ENEMY.get())
+            .orElse(null);
+    }
+
+    @Override
+    public int getPoints() {
+        return getEnemy() == null ? 0 : this.snowballingPoints;
+    }
+
+    @Override
+    public void setPoints(final int points) {
+        this.snowballingPoints = points;
     }
 }

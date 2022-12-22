@@ -7,7 +7,7 @@ public class SnowballingDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void onInitializeDataGenerator(final FabricDataGenerator fabricDataGenerator) {
-        fabricDataGenerator.addProvider(SnowballingBlockLootProvider::new);
+        fabricDataGenerator.addProvider(SnowballingLootTableProvider::new);
         fabricDataGenerator.addProvider(SnowballingTagProvider::new);
     }
 }
