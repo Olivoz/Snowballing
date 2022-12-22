@@ -23,6 +23,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Map;
 
 public class EndSnowballFight extends Behavior<Villager> {
+    
+    public static final int REWARD_COOLDOWN = 20 * 60 * 20;
 
     public static final int SNOWBALL_FIGHT_TIMEOUT = 30 * 20;
 
@@ -83,17 +85,17 @@ public class EndSnowballFight extends Behavior<Villager> {
         LivingEntity enemy = brain.getMemory(SnowballingMemoryModules.SNOWBALL_FIGHT_ENEMY.get())
             .orElse(null);
 
-        if(enemy instanceof Player player) {
-            if(!brain.hasMemoryValue(SnowballingMemoryModules.LAST_PRIZE_DROP.get()) || brain.getMemory(SnowballingMemoryModules.LAST_PRIZE_DROP.get())
-                .orElseThrow() + 20 * 60 * 20 < currentTime) {
+        PointTracker pointTracker = (PointTracker) villager;
 
-                brain.setMemory(SnowballingMemoryModules.LAST_PRIZE_DROP.get(), currentTime);
+        if(enemy instanceof Player player) {
+            if(pointTracker.getLastRewardDrop() + REWARD_COOLDOWN < currentTime) {
+                pointTracker.setLastRewardDrop(currentTime);
 
                 LootContext.Builder builder = new LootContext.Builder(serverLevel).withOptionalParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_ENEMY, enemy)
                     .withRandom(villager.getRandom())
                     .withLuck(player.getLuck())
                     .withOptionalParameter(SnowballingLootContextParams.LAST_HIT_BY_SNOWBALL, ((EvilSnowballReferenceHack) villager).getLastHitBySnowball())
-                    .withParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_POINTS, ((PointTracker) villager).getPoints())
+                    .withParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_POINTS, (pointTracker).getPoints())
                     .withParameter(LootContextParams.THIS_ENTITY, villager)
                     .withParameter(LootContextParams.ORIGIN, villager.position());
 
@@ -106,7 +108,7 @@ public class EndSnowballFight extends Behavior<Villager> {
             }
         }
 
-        ((PointTracker) villager).setPoints(0);
+        (pointTracker).setPoints(0);
         brain.eraseMemory(SnowballingMemoryModules.LAST_ATTACKED_BY_SNOWBALL.get());
         brain.eraseMemory(SnowballingMemoryModules.SNOWBALL_FIGHT_ENEMY.get());
         brain.updateActivityFromSchedule(serverLevel.getDayTime(), currentTime);

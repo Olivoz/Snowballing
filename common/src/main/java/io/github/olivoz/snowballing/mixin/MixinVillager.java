@@ -38,6 +38,8 @@ import java.util.Set;
 @Mixin(Villager.class)
 public abstract class MixinVillager implements EvilSnowballReferenceHack, PointTracker {
 
+    private long lastRewardDrop = 0;
+
     private int snowballingPoints = 0;
 
     private @Nullable Snowball lastHitBySnowball = null;
@@ -101,6 +103,16 @@ public abstract class MixinVillager implements EvilSnowballReferenceHack, PointT
     public @Nullable LivingEntity getEnemy() {
         return getBrain().getMemory(SnowballingMemoryModules.SNOWBALL_FIGHT_ENEMY.get())
             .orElse(null);
+    }
+
+    @Override
+    public long getLastRewardDrop() {
+        return this.lastRewardDrop;
+    }
+
+    @Override
+    public void setLastRewardDrop(final long timestamp) {
+        this.lastRewardDrop = timestamp;
     }
 
     @Override

@@ -7,6 +7,10 @@ public interface PointTracker {
 
     @Nullable LivingEntity getEnemy();
 
+    long getLastRewardDrop();
+
+    void setLastRewardDrop(long timestamp);
+
     int getPoints();
 
     void setPoints(int points);
