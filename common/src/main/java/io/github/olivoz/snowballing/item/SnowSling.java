@@ -148,7 +148,7 @@ public class SnowSling extends ProjectileWeaponItem implements Vanishable {
         itemStack.hurtAndBreak(1, livingEntity, consumedPlayer -> consumedPlayer.broadcastBreakEvent(consumedPlayer.getUsedItemHand()));
         if(!level.isClientSide) {
 
-            float power = BowItem.getPowerForTime(getUseDuration(itemStack) - useTimeLeft);
+            float power = BowItem.getPowerForTime(getUseDuration(itemStack) - useTimeLeft) * 1.5F;
             float offsetAngle = snowballs > 1 ? -5 * (snowballs - 1) : 0;
 
             for(int i = 0; i < snowballs; i++) {
