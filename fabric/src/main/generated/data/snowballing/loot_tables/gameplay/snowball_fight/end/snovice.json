@@ -21,11 +21,31 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 16.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:snow_block"
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:iron_shovel"
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:diamond_shovel",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "snowballing:snowball_fight_points"
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:iron_shovel",
           "weight": -5
         }
       ],

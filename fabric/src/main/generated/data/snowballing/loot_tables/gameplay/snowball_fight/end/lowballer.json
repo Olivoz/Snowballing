@@ -21,6 +21,21 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 32.0,
+                "min": 16.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:snowball"
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:wooden_shovel"
         }
       ],

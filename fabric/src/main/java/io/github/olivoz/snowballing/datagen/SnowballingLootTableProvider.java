@@ -3,6 +3,7 @@ package io.github.olivoz.snowballing.datagen;
 import io.github.olivoz.snowballing.block.SnowballPileBlock;
 import io.github.olivoz.snowballing.data.SnowballingPointsValue;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
+import io.github.olivoz.snowballing.registry.SnowballingItems;
 import io.github.olivoz.snowballing.registry.SnowballingLootContextParamSets;
 import io.github.olivoz.snowballing.registry.SnowballingLootTables;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -76,6 +78,8 @@ public class SnowballingLootTableProvider extends SimpleFabricLootTableProvider 
             .withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.EMERALD)
                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
+                .add(LootItem.lootTableItem(Items.SNOWBALL)
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(16.0F, 32.0F))))
                 .add(LootItem.lootTableItem(Items.WOODEN_SHOVEL))));
 
         consumer.accept(SnowballingLootTables.SNOWBALL_FIGHT_SNOVICE, LootTable.lootTable()
@@ -83,8 +87,12 @@ public class SnowballingLootTableProvider extends SimpleFabricLootTableProvider 
             .withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.EMERALD)
                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))))
+                .add(LootItem.lootTableItem(Items.SNOW_BLOCK)
+                    .apply(SetItemCountFunction.setCount(ConstantValue.exactly(16))))
                 .add(LootItem.lootTableItem(Items.IRON_SHOVEL))
-                .add(LootItem.lootTableItem(Items.DIAMOND_SHOVEL)
+                .add(LootItem.lootTableItem(Items.IRON_SHOVEL)
+                    .apply(EnchantWithLevelsFunction.enchantWithLevels(SnowballingPointsValue.INSTANCE)
+                        .allowTreasure())
                     .setWeight(-5))));
 
         consumer.accept(SnowballingLootTables.SNOWBALL_FIGHT_SNOWBALLER, LootTable.lootTable()
@@ -93,8 +101,13 @@ public class SnowballingLootTableProvider extends SimpleFabricLootTableProvider 
                 .add(LootItem.lootTableItem(Items.EMERALD)
                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(10.0F, 15.0F))))
                 .add(LootItem.lootTableItem(Items.IRON_SHOVEL)
+                    .apply(EnchantWithLevelsFunction.enchantWithLevels(SnowballingPointsValue.INSTANCE)
+                        .allowTreasure())
                     .setWeight(-5))
-                .add(LootItem.lootTableItem(Items.DIAMOND_SHOVEL))));
+                .add(LootItem.lootTableItem(Items.STONE_SHOVEL)
+                    .apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30))))
+                .add(LootItem.lootTableItem(SnowballingItems.SNOW_SLING.get())
+                    .setWeight(-10))));
     }
 
     private LootPoolSingletonContainer.Builder<?> snowballPileDropForSize(int size) {
