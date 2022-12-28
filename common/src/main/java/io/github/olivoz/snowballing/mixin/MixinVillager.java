@@ -8,7 +8,7 @@ import io.github.olivoz.snowballing.registry.SnowballingActivities;
 import io.github.olivoz.snowballing.registry.SnowballingItems;
 import io.github.olivoz.snowballing.registry.SnowballingMemoryModules;
 import io.github.olivoz.snowballing.villager.behaviour.EndSnowballFight;
-import io.github.olivoz.snowballing.villager.behaviour.SetSnowAsWalkTarget;
+import io.github.olivoz.snowballing.villager.behaviour.FindSnowballs;
 import io.github.olivoz.snowballing.villager.behaviour.SnowballAttack;
 import io.github.olivoz.snowballing.villager.behaviour.TakeOrMakeSnowballs;
 import net.minecraft.world.InteractionHand;
@@ -72,7 +72,7 @@ public abstract class MixinVillager implements EvilSnowballReferenceHack, PointT
     @Inject(at = @At("HEAD"), method = "registerBrainGoals")
     public void snowballingMixinRegisterBrainGoals(final Brain<Villager> brain, final CallbackInfo ci) {
         float speed = 0.5F;
-        brain.addActivity(SnowballingActivities.SNOWBALL_FIGHT.get(), ImmutableList.of(Pair.of(0, new GateBehavior<>(Map.of(), Set.of(), GateBehavior.OrderPolicy.ORDERED, GateBehavior.RunningPolicy.RUN_ONE, List.of(Pair.of(new EndSnowballFight(), 0), Pair.of(new SnowballAttack(speed), 1), Pair.of(new TakeOrMakeSnowballs(), 1), Pair.of(new SetSnowAsWalkTarget(speed * 1.5F), 1)))), VillagerGoalPackages.getMinimalLookBehavior()));
+        brain.addActivity(SnowballingActivities.SNOWBALL_FIGHT.get(), ImmutableList.of(Pair.of(0, new GateBehavior<>(Map.of(), Set.of(), GateBehavior.OrderPolicy.ORDERED, GateBehavior.RunningPolicy.RUN_ONE, List.of(Pair.of(new EndSnowballFight(), 0), Pair.of(new SnowballAttack(speed), 1), Pair.of(new TakeOrMakeSnowballs(), 1), Pair.of(new FindSnowballs(speed * 1.5F), 1)))), VillagerGoalPackages.getMinimalLookBehavior()));
     }
 
     @Inject(at = @At("HEAD"), method = "mobInteract", cancellable = true)

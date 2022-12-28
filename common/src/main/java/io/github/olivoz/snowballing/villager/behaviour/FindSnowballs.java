@@ -17,13 +17,13 @@ import net.minecraft.world.item.Items;
 import java.util.Map;
 import java.util.Optional;
 
-public class SetSnowAsWalkTarget extends Behavior<Villager> {
+public class FindSnowballs extends Behavior<Villager> {
 
     private static final int COOLDOWN = 20;
     private final float speedModifier;
     private long lastUpdate;
 
-    public SetSnowAsWalkTarget(float speedModifier) {
+    public FindSnowballs(float speedModifier) {
         super(Map.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT));
         this.speedModifier = speedModifier;
     }

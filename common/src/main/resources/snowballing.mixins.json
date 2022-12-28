@@ -9,6 +9,7 @@
     "MixinSnowball",
     "MixinThrowableItemProjectile",
     "MixinVillager",
+    "MixinVillagerGoalPackages",
     "MixinVillagerPanicTrigger"
   ],
   "injectors": {
