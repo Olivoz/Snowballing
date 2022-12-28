@@ -15,14 +15,21 @@ public final class SnowballingBlocks {
     }
 
     public static final Supplier<Block> SNOWBALL_PILE = RegistryManager.registerBlock("snowball_pile", SnowballPileBlock::new);
-    public static final Supplier<Block> SNOWBRICKS = RegistryManager.registerBlock("snow_bricks", () ->
+    public static final Supplier<Block> SNOW_BRICKS = RegistryManager.registerBlock("snow_bricks", () ->
             new Block(
                     BlockBehaviour.Properties.of(Material.SNOW)
                             .requiresCorrectToolForDrops()
                             .dropsLike(Blocks.SNOW_BLOCK)
                             .strength(0.2f)
-            ));
-
+            )
+    );
+    public static final Supplier<Block> SNOWBALL_BRICKS = RegistryManager.registerBlock("snowball_bricks", () ->
+            new Block(
+                    BlockBehaviour.Properties.of(Material.SNOW)
+                            .requiresCorrectToolForDrops()
+                            .strength(0.2f)
+            )
+    );
     public static void init() {
 
     }

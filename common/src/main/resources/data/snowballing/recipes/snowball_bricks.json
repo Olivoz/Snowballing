@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "$$$",
+    "$$$",
+	"$$$"
+  ],
+  "key": {
+    "$": {
+      "item": "minecraft:snow_bricks"
+    }
+  },
+  "result": {
+    "item": "snowballing:snowball_bricks",
+    "count": 4
+  }
+}

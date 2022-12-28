@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
@@ -60,6 +61,9 @@ public class SnowballingLootTableProvider extends SimpleFabricLootTableProvider 
                                 .hasProperty(SnowballPileBlock.SNOWBALLS, size)))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(size + 1))))
                     .when(HAS_NO_SILK_TOUCH), AlternativesEntry.alternatives(SnowballPileBlock.SNOWBALLS.getPossibleValues(), size -> size == 1 ? snowballPileDropForSize(size) : snowballPileDropForSize(size).apply(SetNbtFunction.setTag(snowballPileNBT(size))))))));
+
+        consumer.accept(SnowballingBlocks.SNOWBALL_BRICKS.get()
+                .getLootTable(), BlockLoot.createSingleItemTable(SnowballingItems.SNOW_BRICKS.get()));
 
         consumer.accept(SnowballingLootTables.SNOWBALL_FIGHT_END, LootTable.lootTable()
             .setParamSet(SnowballingLootContextParamSets.SNOWBALL_FIGHT)

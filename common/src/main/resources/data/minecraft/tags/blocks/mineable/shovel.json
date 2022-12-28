@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "snowballing:snow_bricks"
+    "snowballing:snow_bricks",
+	"snowballing:snowball_bricks"
   ]
 }

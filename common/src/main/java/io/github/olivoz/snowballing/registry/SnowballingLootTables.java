@@ -13,4 +13,5 @@ public final class SnowballingLootTables {
     public static final ResourceLocation SNOWBALL_FIGHT_SNOVICE = new ResourceLocation(SnowballingMod.MOD_ID, "gameplay/snowball_fight/end/snovice");
     public static final ResourceLocation SNOWBALL_FIGHT_LOWBALLER = new ResourceLocation(SnowballingMod.MOD_ID, "gameplay/snowball_fight/end/lowballer");
 
+
 }
