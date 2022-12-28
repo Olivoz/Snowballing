@@ -6,9 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Items;
@@ -46,6 +46,6 @@ public class SetSnowAsWalkTarget extends Behavior<Villager> {
 
         Brain<Villager> brain = villager.getBrain();
         brain.setMemory(SnowballingMemoryModules.SNOW_AT.get(), optionalSnowPos.orElseThrow());
-        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(optionalSnowPos.orElseThrow(), speedModifier, 1));
+        BehaviorUtils.setWalkAndLookTargetMemories(villager, optionalSnowPos.orElseThrow(), speedModifier, 1);
     }
 }
