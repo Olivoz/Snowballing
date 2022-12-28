@@ -12,6 +12,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
+import net.minecraft.world.entity.ai.gossip.GossipContainer;
+import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +23,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class EndSnowballFight extends Behavior<Villager> {
     
@@ -89,6 +92,13 @@ public class EndSnowballFight extends Behavior<Villager> {
 
         if(enemy instanceof Player player && pointTracker.getLastRewardDrop() + REWARD_COOLDOWN < currentTime) {
             pointTracker.setLastRewardDrop(currentTime);
+
+            if(pointTracker.getPoints() > 10) {
+                GossipContainer gossips = villager.getGossips();
+                UUID uuid = player.getUUID();
+                gossips.add(uuid, GossipType.MAJOR_POSITIVE, 10);
+                gossips.add(uuid, GossipType.MINOR_POSITIVE, 15);
+            }
 
             LootContext.Builder builder = new LootContext.Builder(serverLevel).withOptionalParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_ENEMY, enemy)
                 .withRandom(villager.getRandom())
