@@ -24,7 +24,9 @@ import java.util.Optional;
 public class TakeOrMakeSnowballs extends Behavior<Villager> {
 
     private static final int TIME_PER_SNOWBALL = 20;
-    private static final float REACH = 1.73F;
+    private static final float REACH = 1.73F * 1.73F;
+
+    private int ticksRemaining = 0;
 
     public TakeOrMakeSnowballs() {
         super(Map.of(SnowballingMemoryModules.SNOW_AT.get(), MemoryStatus.VALUE_PRESENT), TIME_PER_SNOWBALL * Items.SNOWBALL.getMaxStackSize());
@@ -53,14 +55,31 @@ public class TakeOrMakeSnowballs extends Behavior<Villager> {
         villager.getBrain()
             .setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(knownSnowPos.orElseThrow()));
 
+        ticksRemaining = 0;
+    }
+
+    @Override
+    protected void tick(final ServerLevel serverLevel, final Villager villager, final long currentTick) {
+        if(--ticksRemaining > 0) return;
+        Optional<BlockPos> knownSnowPos = getKnownSnowPos(villager);
+
         SimpleContainer inventory = villager.getInventory();
         ItemStack snowballItemStack = Items.SNOWBALL.getDefaultInstance();
         int added = snowballItemStack.getCount() - inventory.addItem(snowballItemStack)
             .getCount();
 
         BlockState blockState = serverLevel.getBlockState(knownSnowPos.orElseThrow());
-        if(!blockState.is(SnowballingBlocks.SNOWBALL_PILE.get())) return;
+        if(!blockState.is(SnowballingBlocks.SNOWBALL_PILE.get())) {
+            ticksRemaining = 10;
+            return;
+        }
+
         SnowballPileBlock.removeSnowball(serverLevel, knownSnowPos.orElseThrow(), blockState, added);
+    }
+
+    @Override
+    protected boolean canStillUse(final ServerLevel serverLevel, final Villager villager, final long currentTick) {
+        return checkExtraStartConditions(serverLevel, villager);
     }
 
     @Override
@@ -76,7 +95,8 @@ public class TakeOrMakeSnowballs extends Behavior<Villager> {
         }
 
         if(villager.getInventory()
-            .countItem(Items.SNOWBALL) >= Items.SNOWBALL.getMaxStackSize())
+            .countItem(Items.SNOWBALL) >= Items.SNOWBALL.getMaxStackSize()) {
             brain.eraseMemory(SnowballingMemoryModules.SNOW_AT.get());
+        }
     }
 }
