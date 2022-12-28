@@ -10,6 +10,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.DamagePredicate;
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
+import net.minecraft.advancements.critereon.EffectsChangedTrigger;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.MinMaxBounds;
@@ -55,14 +56,8 @@ public class SnowballingAdvancementProvider extends FabricAdvancementProvider {
 
         consumer.accept(root);
 
-        build(consumer, "freeze", advancement(SnowballingItems.SNOWBALL_PILE.get(), "freeze", false, root).addCriterion("hit_snowball", PlayerHurtEntityTrigger.TriggerInstance.playerHurtEntity(DamagePredicate.Builder.damageInstance()
-            .type(DamageSourcePredicate.Builder.damageType()
-                .isProjectile(true)
-                .direct(EntityPredicate.Builder.entity()
-                    .of(EntityType.SNOWBALL))), EntityPredicate.Builder.entity()
-            .effects(MobEffectsPredicate.effects()
-                .and(SnowballingEffects.SNOWBALLED.get(), new MobEffectsPredicate.MobEffectInstancePredicate(MinMaxBounds.Ints.atLeast(5), MinMaxBounds.Ints.ANY, null, null)))
-            .build())));
+        build(consumer, "freeze", advancement(SnowballingItems.SNOWBALL_PILE.get(), "freeze", false, root).addCriterion("snowballed_effect", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.effects()
+            .and(SnowballingEffects.SNOWBALLED.get(), new MobEffectsPredicate.MobEffectInstancePredicate(MinMaxBounds.Ints.atLeast(4), MinMaxBounds.Ints.ANY, null, null)))));
 
         Advancement snowballFightAdvancement = build(consumer, "snowball_fight", advancement(SnowballingItems.SNOWBALL_PILE.get(), "snowball_fight", false, root).addCriterion("hit_snowball", PlayerHurtEntityTrigger.TriggerInstance.playerHurtEntity(DamagePredicate.Builder.damageInstance()
             .type(DamageSourcePredicate.Builder.damageType()
