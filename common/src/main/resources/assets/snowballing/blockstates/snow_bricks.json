@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model":  "snowballing:block/snow_bricks"
+    }
+  }
+}
