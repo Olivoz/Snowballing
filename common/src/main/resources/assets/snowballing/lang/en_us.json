@@ -1,7 +1,21 @@
 {
   "block.snowballing.snowball_pile": "Snowball Pile",
+  "block.snowballing.snow_bricks": "Snow Bricks",
+
   "item.snowballing.snowball_pile.size": "%s Snowball(s)",
   "itemGroup.snowballing.items": "Snowballing Items",
   "item.snowballing.snow_sling": "Snow Sling",
-  "effect.snowballing.snowballed": "Snowballed"
+  "effect.snowballing.snowballed": "Snowballed",
+
+  "advancement.snowballing.root.title": "Snowballing!",
+  "advancement.snowballing.root.description": "Snowballs feel extra magical. Get your shovels out and prepare for a snowball fight.",
+  "advancement.snowballing.freeze.title": "Snowball Snow-chilled",
+  "advancement.snowballing.freeze.description": "Take freeezing damage due to a snowball fight.",
+  "advancement.snowballing.snowball_fight.title": "Snowball Fight",
+  "advancement.snowballing.snowball_fight.description": "Participate in a snowball fight with villagers. You might even win a reward!",
+  "advancement.snowballing.snow_sling.title": "Slinger",
+  "advancement.snowballing.snow_sling.description": "Use a Snow Sling to launch a powerful snowball that will knockback your foes!",
+  "advancement.snowballing.accidental_doom.title": "It's winter, not fall!",
+  "advancement.snowballing.accidental_doom.description": "Slay a foe with a fall resulting from the mighty Snow Sling."
+
 }

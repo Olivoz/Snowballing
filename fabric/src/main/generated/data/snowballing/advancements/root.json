@@ -14,7 +14,7 @@
     }
   },
   "display": {
-    "announce_to_chat": false,
+    "announce_to_chat": true,
     "background": "minecraft:textures/block/snow.png",
     "description": {
       "translate": "advancement.snowballing.root.description"
@@ -24,7 +24,7 @@
     "icon": {
       "item": "snowballing:snowball_pile"
     },
-    "show_toast": false,
+    "show_toast": true,
     "title": {
       "translate": "advancement.snowballing.root.title"
     }
