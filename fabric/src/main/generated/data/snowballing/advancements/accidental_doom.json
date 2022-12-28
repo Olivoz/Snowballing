@@ -20,7 +20,7 @@
       "translate": "advancement.snowballing.accidental_doom.description"
     },
     "frame": "task",
-    "hidden": false,
+    "hidden": true,
     "icon": {
       "item": "snowballing:snowball_pile"
     },
