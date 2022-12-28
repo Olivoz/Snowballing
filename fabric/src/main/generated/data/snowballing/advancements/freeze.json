@@ -1,33 +1,17 @@
 {
   "parent": "snowballing:root",
   "criteria": {
-    "hit_snowball": {
+    "snowballed_effect": {
       "conditions": {
-        "damage": {
-          "type": {
-            "direct_entity": {
-              "type": "minecraft:snowball"
-            },
-            "is_projectile": true
-          }
-        },
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "effects": {
-                "snowballing:snowballed": {
-                  "amplifier": {
-                    "min": 5
-                  }
-                }
-              }
+        "effects": {
+          "snowballing:snowballed": {
+            "amplifier": {
+              "min": 4
             }
           }
-        ]
+        }
       },
-      "trigger": "minecraft:player_hurt_entity"
+      "trigger": "minecraft:effects_changed"
     }
   },
   "display": {
@@ -47,7 +31,7 @@
   },
   "requirements": [
     [
-      "hit_snowball"
+      "snowballed_effect"
     ]
   ]
 }
