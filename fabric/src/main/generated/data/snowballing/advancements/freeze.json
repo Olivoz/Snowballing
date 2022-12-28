@@ -6,7 +6,7 @@
         "effects": {
           "snowballing:snowballed": {
             "amplifier": {
-              "min": 4
+              "min": 3
             }
           }
         }

@@ -57,7 +57,7 @@ public class SnowballingAdvancementProvider extends FabricAdvancementProvider {
         consumer.accept(root);
 
         build(consumer, "freeze", advancement(SnowballingItems.SNOWBALL_PILE.get(), "freeze", false, root).addCriterion("snowballed_effect", EffectsChangedTrigger.TriggerInstance.hasEffects(MobEffectsPredicate.effects()
-            .and(SnowballingEffects.SNOWBALLED.get(), new MobEffectsPredicate.MobEffectInstancePredicate(MinMaxBounds.Ints.atLeast(4), MinMaxBounds.Ints.ANY, null, null)))));
+            .and(SnowballingEffects.SNOWBALLED.get(), new MobEffectsPredicate.MobEffectInstancePredicate(MinMaxBounds.Ints.atLeast(3), MinMaxBounds.Ints.ANY, null, null)))));
 
         Advancement snowballFightAdvancement = build(consumer, "snowball_fight", advancement(SnowballingItems.SNOWBALL_PILE.get(), "snowball_fight", false, root).addCriterion("hit_snowball", PlayerHurtEntityTrigger.TriggerInstance.playerHurtEntity(DamagePredicate.Builder.damageInstance()
             .type(DamageSourcePredicate.Builder.damageType()
@@ -77,7 +77,7 @@ public class SnowballingAdvancementProvider extends FabricAdvancementProvider {
                     .of(EntityType.SNOWBALL)
                     .nbt(new NbtPredicate(snowSlingCompound)))))));
 
-        build(consumer, "accidental_doom", advancement(SnowballingItems.SNOWBALL_PILE.get(), "accidental_doom", false, snowSlingAdvancement).addCriterion("snow_sling_kill", KilledByFallDamageTrigger.TriggerInstance.fall(EntityPredicate.ANY, DamageSourcePredicate.Builder.damageType()
+        build(consumer, "accidental_doom", advancement(SnowballingItems.SNOWBALL_PILE.get(), "accidental_doom", true, snowSlingAdvancement).addCriterion("snow_sling_kill", KilledByFallDamageTrigger.TriggerInstance.fall(EntityPredicate.ANY, DamageSourcePredicate.Builder.damageType()
             .isProjectile(true)
             .direct(EntityPredicate.Builder.entity()
                 .of(EntityType.SNOWBALL)
