@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.Items;
 
@@ -35,13 +36,16 @@ public class SetSnowAsWalkTarget extends Behavior<Villager> {
             .countItem(Items.SNOWBALL) < Items.SNOWBALL.getMaxStackSize();
     }
 
+    private static Optional<BlockPos> findPOI(final ServerLevel serverLevel, final BlockPos origin, PoiType poiType) {
+        return serverLevel.getPoiManager()
+            .findClosest((holder -> holder.value() == poiType), origin, 32, PoiManager.Occupancy.HAS_SPACE);
+    }
+
     @Override
     protected void start(final ServerLevel serverLevel, final Villager villager, final long currentTick) {
         this.lastUpdate = currentTick;
 
-        Optional<BlockPos> optionalSnowPos = serverLevel.getPoiManager()
-            .findClosest((holder -> holder.value() == SnowballingPOI.SNOWBALL_PILE.get()), villager.blockPosition(), 32, PoiManager.Occupancy.HAS_SPACE);
-
+        Optional<BlockPos> optionalSnowPos = findPOI(serverLevel, villager.blockPosition(), SnowballingPOI.SNOWBALL_PILE.get()).or(() -> findPOI(serverLevel, villager.blockPosition(), SnowballingPOI.SNOW.get()));
         if(optionalSnowPos.isEmpty()) return;
 
         Brain<Villager> brain = villager.getBrain();

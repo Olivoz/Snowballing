@@ -12,7 +12,8 @@ public final class SnowballingPOI {
     private SnowballingPOI() {
     }
 
-    public static final Supplier<PoiType> SNOWBALL_PILE = RegistryManager.registerPOI("snowball_pile", 1, 5, () -> new Block[] { SnowballingBlocks.SNOWBALL_PILE.get(), Blocks.SNOW, Blocks.SNOW_BLOCK });
+    public static final Supplier<PoiType> SNOWBALL_PILE = RegistryManager.registerPOI("snowball_pile", 1, 5, () -> new Block[] { SnowballingBlocks.SNOWBALL_PILE.get() });
+    public static final Supplier<PoiType> SNOW = RegistryManager.registerPOI("snow", 1, 5, () -> new Block[] { Blocks.SNOW, Blocks.SNOW_BLOCK });
 
     public static void init() {
 
