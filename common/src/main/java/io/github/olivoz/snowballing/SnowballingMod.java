@@ -2,6 +2,7 @@ package io.github.olivoz.snowballing;
 
 import io.github.olivoz.snowballing.registry.SnowballingActivities;
 import io.github.olivoz.snowballing.registry.SnowballingBlocks;
+import io.github.olivoz.snowballing.registry.SnowballingCriterionTriggers;
 import io.github.olivoz.snowballing.registry.SnowballingEffects;
 import io.github.olivoz.snowballing.registry.SnowballingGameRules;
 import io.github.olivoz.snowballing.registry.SnowballingItems;
@@ -27,5 +28,6 @@ public final class SnowballingMod {
         SnowballingEffects.init();
         SnowballingLootContextParamSets.init();
         SnowballingNumberProviders.init();
+        SnowballingCriterionTriggers.init();
     }
 }

@@ -1,0 +1,47 @@
+{
+  "parent": "snowballing:root",
+  "criteria": {
+    "hit_snowball": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "minecraft:snowball"
+            },
+            "is_projectile": true
+          }
+        },
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:villager"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.snowballing.snowball_fight.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "snowballing:snowball_pile"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.snowballing.snowball_fight.title"
+    }
+  },
+  "requirements": [
+    [
+      "hit_snowball"
+    ]
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "snowballing:snow_sling",
+  "criteria": {
+    "snow_sling_kill": {
+      "conditions": {
+        "lastDamageSource": {
+          "direct_entity": {
+            "type": "minecraft:snowball",
+            "nbt": "{IsSlingShot:1b}"
+          },
+          "is_projectile": true
+        }
+      },
+      "trigger": "snowballing:killed_by_fall"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.snowballing.accidental_doom.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "snowballing:snowball_pile"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.snowballing.accidental_doom.title"
+    }
+  },
+  "requirements": [
+    [
+      "snow_sling_kill"
+    ]
+  ]
+}

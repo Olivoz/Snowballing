@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "snowball": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:snowball"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/snow.png",
+    "description": {
+      "translate": "advancement.snowballing.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "snowballing:snowball_pile"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.snowballing.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "snowball"
+    ]
+  ]
+}

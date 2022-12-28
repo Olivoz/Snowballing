@@ -5,8 +5,11 @@
   "client": [
   ],
   "mixins": [
+    "MixinServerPlayer",
     "MixinSnowball",
-    "MixinVillager"
+    "MixinThrowableItemProjectile",
+    "MixinVillager",
+    "MixinVillagerPanicTrigger"
   ],
   "injectors": {
     "defaultRequire": 1

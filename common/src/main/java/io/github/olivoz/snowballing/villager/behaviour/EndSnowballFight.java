@@ -87,25 +87,23 @@ public class EndSnowballFight extends Behavior<Villager> {
 
         PointTracker pointTracker = (PointTracker) villager;
 
-        if(enemy instanceof Player player) {
-            if(pointTracker.getLastRewardDrop() + REWARD_COOLDOWN < currentTime) {
-                pointTracker.setLastRewardDrop(currentTime);
+        if(enemy instanceof Player player && pointTracker.getLastRewardDrop() + REWARD_COOLDOWN < currentTime) {
+            pointTracker.setLastRewardDrop(currentTime);
 
-                LootContext.Builder builder = new LootContext.Builder(serverLevel).withOptionalParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_ENEMY, enemy)
-                    .withRandom(villager.getRandom())
-                    .withLuck(player.getLuck())
-                    .withOptionalParameter(SnowballingLootContextParams.LAST_HIT_BY_SNOWBALL, ((EvilSnowballReferenceHack) villager).getLastHitBySnowball())
-                    .withParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_POINTS, (pointTracker).getPoints())
-                    .withParameter(LootContextParams.THIS_ENTITY, villager)
-                    .withParameter(LootContextParams.ORIGIN, villager.position());
+            LootContext.Builder builder = new LootContext.Builder(serverLevel).withOptionalParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_ENEMY, enemy)
+                .withRandom(villager.getRandom())
+                .withLuck(player.getLuck())
+                .withOptionalParameter(SnowballingLootContextParams.LAST_HIT_BY_SNOWBALL, ((EvilSnowballReferenceHack) villager).getLastHitBySnowball())
+                .withParameter(SnowballingLootContextParams.SNOWBALL_FIGHT_POINTS, (pointTracker).getPoints())
+                .withParameter(LootContextParams.THIS_ENTITY, villager)
+                .withParameter(LootContextParams.ORIGIN, villager.position());
 
-                Vec3 pos = !enemy.isSpectator() && enemy.distanceToSqr(villager) < 5 * 5 ? enemy.position() : villager.position();
+            Vec3 pos = !enemy.isSpectator() && enemy.distanceToSqr(villager) < 5 * 5 ? enemy.position() : villager.position();
 
-                serverLevel.getServer()
-                    .getLootTables()
-                    .get(SnowballingLootTables.SNOWBALL_FIGHT_END)
-                    .getRandomItems(builder.create(SnowballingLootContextParamSets.SNOWBALL_FIGHT), itemStack -> BehaviorUtils.throwItem(villager, itemStack, pos));
-            }
+            serverLevel.getServer()
+                .getLootTables()
+                .get(SnowballingLootTables.SNOWBALL_FIGHT_END)
+                .getRandomItems(builder.create(SnowballingLootContextParamSets.SNOWBALL_FIGHT), itemStack -> BehaviorUtils.throwItem(villager, itemStack, pos));
         }
 
         (pointTracker).setPoints(0);

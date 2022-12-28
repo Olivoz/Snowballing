@@ -1,0 +1,40 @@
+{
+  "parent": "snowballing:snowball_fight",
+  "criteria": {
+    "shoot_snow_sling": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "minecraft:snowball",
+              "nbt": "{IsSlingShot:1b}"
+            },
+            "is_projectile": true
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.snowballing.snow_sling.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "snowballing:snow_sling",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.snowballing.snow_sling.title"
+    }
+  },
+  "requirements": [
+    [
+      "shoot_snow_sling"
+    ]
+  ]
+}

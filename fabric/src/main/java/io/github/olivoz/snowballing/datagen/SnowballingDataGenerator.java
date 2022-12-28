@@ -9,5 +9,6 @@ public class SnowballingDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(final FabricDataGenerator fabricDataGenerator) {
         fabricDataGenerator.addProvider(SnowballingLootTableProvider::new);
         fabricDataGenerator.addProvider(SnowballingTagProvider::new);
+        fabricDataGenerator.addProvider(SnowballingAdvancementProvider::new);
     }
 }
