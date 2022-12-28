@@ -152,7 +152,7 @@ public class SnowballAttack extends Behavior<Villager> {
             .countItem(Items.SNOWBALL) > 0 && !EndSnowballFight.shouldEnd(villager);
     }
 
-    private void throwSnowball(Villager villager, LivingEntity target) {
+    public static void throwSnowball(Villager villager, LivingEntity target) {
         Level level = villager.level;
         Snowball snowball = new Snowball(level, villager);
         double x = target.getX() - villager.getX();

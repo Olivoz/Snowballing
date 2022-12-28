@@ -3,6 +3,7 @@ package io.github.olivoz.snowballing.mixin;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import io.github.olivoz.snowballing.villager.behaviour.FindLocationAndMakeSnowballPile;
+import io.github.olivoz.snowballing.villager.behaviour.RandomSnowballAttack;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
 import net.minecraft.world.entity.npc.Villager;
@@ -23,6 +24,7 @@ public final class MixinVillagerGoalPackages {
         cir.setReturnValue(ImmutableList.<Pair<Integer, ? extends Behavior<? super Villager>>>builder()
             .addAll(cir.getReturnValue())
             .add(Pair.of(2, new FindLocationAndMakeSnowballPile(0.5F)))
+            .add(Pair.of(0, new RandomSnowballAttack()))
             .build());
     }
 
