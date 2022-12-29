@@ -4,6 +4,7 @@ import io.github.olivoz.snowballing.block.SnowballPileBlock;
 import io.github.olivoz.snowballing.manager.RegistryManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 
@@ -21,13 +22,14 @@ public final class SnowballingBlocks {
                             .requiresCorrectToolForDrops()
                             .dropsLike(Blocks.SNOW_BLOCK)
                             .strength(0.2f)
+                            .sound(SoundType.SNOW)
             )
     );
     public static final Supplier<Block> SNOWBALL_BRICKS = RegistryManager.registerBlock("snowball_bricks", () ->
             new Block(
                     BlockBehaviour.Properties.of(Material.SNOW)
-                            .requiresCorrectToolForDrops()
                             .strength(0.2f)
+                            .sound(SoundType.SNOW)
             )
     );
     public static void init() {

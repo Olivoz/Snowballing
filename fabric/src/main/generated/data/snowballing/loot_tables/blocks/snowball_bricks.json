@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "snowballing:snowball_bricks"
+          "name": "snowballing:snow_bricks"
         }
       ],
       "rolls": 1.0
