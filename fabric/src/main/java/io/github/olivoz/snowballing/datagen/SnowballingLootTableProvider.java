@@ -63,7 +63,7 @@ public class SnowballingLootTableProvider extends SimpleFabricLootTableProvider 
                     .when(HAS_NO_SILK_TOUCH), AlternativesEntry.alternatives(SnowballPileBlock.SNOWBALLS.getPossibleValues(), size -> size == 1 ? snowballPileDropForSize(size) : snowballPileDropForSize(size).apply(SetNbtFunction.setTag(snowballPileNBT(size))))))));
 
         consumer.accept(SnowballingBlocks.SNOWBALL_BRICKS.get()
-                .getLootTable(), BlockLoot.createSingleItemTable(SnowballingItems.SNOW_BRICKS.get()));
+            .getLootTable(), BlockLoot.createSingleItemTable(SnowballingItems.SNOWBALL_BRICKS.get()));
 
         consumer.accept(SnowballingLootTables.SNOWBALL_FIGHT_END, LootTable.lootTable()
             .setParamSet(SnowballingLootContextParamSets.SNOWBALL_FIGHT)

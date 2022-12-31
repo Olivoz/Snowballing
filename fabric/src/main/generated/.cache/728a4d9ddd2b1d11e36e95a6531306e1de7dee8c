@@ -1,5 +1,5 @@
-// 1.19.2	2022-12-30T15:34:13.2782212	minecraft:block Loot Table
-b879fdf206069596f93929f8823f5d290dbdcce5 data\snowballing\loot_tables\blocks\snowball_bricks.json
+// 1.19.2	2022-12-31T11:31:43.6348342	minecraft:block Loot Table
+0b164710595f50e2a2a0a7b35659547508ea5418 data\snowballing\loot_tables\blocks\snowball_bricks.json
 c662cbba0081d894d23c984751941230254cc12f data\snowballing\loot_tables\gameplay\snowball_fight\end.json
 e2764ec26ef48812940d238d660b51c1c8def678 data\snowballing\loot_tables\gameplay\snowball_fight\end\snowballer.json
 3505a0f124030f35db1b70ac580e1cce7b0c4c0a data\snowballing\loot_tables\blocks\snowball_pile.json
