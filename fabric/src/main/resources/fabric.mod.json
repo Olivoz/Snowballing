@@ -19,6 +19,9 @@
     "main": [
       "io.github.olivoz.snowballing.fabric.SnowballingModFabric"
     ],
+    "client": [
+      "io.github.olivoz.snowballing.fabriclike.SnowballingModFabricLikeClient"
+    ],
     "fabric-datagen": [
       "io.github.olivoz.snowballing.datagen.SnowballingDataGenerator"
     ]

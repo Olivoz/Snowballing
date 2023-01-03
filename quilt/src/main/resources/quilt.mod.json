@@ -23,6 +23,9 @@
     "entrypoints": {
       "init": [
         "io.github.olivoz.snowballing.quilt.SnowballingModQuilt"
+      ],
+      "client": [
+        "io.github.olivoz.snowballing.fabriclike.SnowballingModFabricLikeClient"
       ]
     },
     "depends": [

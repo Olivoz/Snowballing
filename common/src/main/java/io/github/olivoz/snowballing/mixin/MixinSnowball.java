@@ -39,6 +39,20 @@ public abstract class MixinSnowball extends ThrowableItemProjectile implements S
     }
 
     private static void snowballingHandleSnowballHit(Snowball snowball, LivingEntity livingEntity) {
+        if((snowball instanceof SlingShotSnowball slingShotSnowball && slingShotSnowball.isSlingShot()) && slingShotSnowball.getCharge() > 0.1F) {
+            double knockbackResistance = Math.max(0.0, 1.0 - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+
+            Vec3 vec3 = snowball.getDeltaMovement()
+                .multiply(1.0, 0.0, 1.0)
+                .normalize()
+                .scale(((SlingShotSnowball) snowball).getCharge() * knockbackResistance);
+
+            if(vec3.lengthSqr() > 0.0) {
+                livingEntity.push(vec3.x, 0.1, vec3.z);
+            }
+        }
+
+        if(snowball.level.isClientSide) return;
         if(!(snowball.getOwner() instanceof LivingEntity shooter)) return;
 
         if(livingEntity instanceof PointTracker pointTracker) {
@@ -81,20 +95,6 @@ public abstract class MixinSnowball extends ThrowableItemProjectile implements S
             if(activeAmplifier < 5 && random.nextInt(100) < 25) activeAmplifier++;
             player.addEffect(new MobEffectInstance(SnowballingEffects.SNOWBALLED.get(), 10 * 20 + random.nextInt(20 << activeAmplifier), activeAmplifier));
         }
-
-        if((snowball instanceof SlingShotSnowball slingShotSnowball && slingShotSnowball.isSlingShot()) && slingShotSnowball.getCharge() > 0.1F) {
-            double knockbackResistance = Math.max(0.0, 1.0 - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-
-            Vec3 vec3 = snowball.getDeltaMovement()
-                .multiply(1.0, 0.0, 1.0)
-                .normalize()
-                .scale(((SlingShotSnowball) snowball).getCharge() * knockbackResistance);
-
-            if(vec3.lengthSqr() > 0.0) {
-                livingEntity.push(vec3.x, 0.1, vec3.z);
-            }
-        }
-
     }
 
     @Override
